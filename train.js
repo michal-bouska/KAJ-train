@@ -1,30 +1,5 @@
 //settings
-var interval = 200;
-var increment = 1;
 
-//game variables
-var length = 0;
-var height = 0;
-var width = 0;
-var fruits = 4;
-var fruits_eaten = 0;
-
-var tail = [];
-
-var fruit_map = [];
-var trainCol = 0;
-var trainRow = 0;
-
-var running = false;
-var gameOver = false;
-var door_open = false;
-var up = 0;
-var right = 1;
-var down = 2;
-var left = 3;
-var direction = down; // up = 0, down = -1, left = 1, right = 2
-var int;
-var win = false;
 
 //tapes
 const empty = "blank";
@@ -34,176 +9,216 @@ const wall = "wall";
 const DOOR_OPEN = "door_open";
 const DOOR_CLOSE = "door_close";
 
-window.addEventListener("keydown", function key() {
-  // if key is W set direction up
-  var key = event.keyCode;
-  console.log(key);
-  if ((key == 119 || key == 87 || key == 38))
-    direction = up;
-  //if key is S set direction down
-  else if ((key == 115 || key == 83 || key == 40))
-    direction = down;
-  //if key is A set direction left
-  else if ((key == 97 || key == 65 || key == 37))
-    direction = left;
-  // if key is D set direction right
-  else if ((key == 100 || key == 68 || key == 39))
-    direction = right;
-  if (!running)
-    running = true;
-  else if (key == 32)
-    running = false;
+const up = 0;
+const right = 1;
+const down = 2;
+const left = 3;
 
-});
+const interval = 200;
+const increment = 1;
 
-/*
- entry point of the game
- */
-function run() {
-  init();
-  int = setInterval(gameLoop, interval);
-}
 
-function init() {
+class Game {
 
-  var world = levels[0];
 
-  fruit_map = world.fruit_map;
-  trainCol = world.start_col;
-  trainRow = world.start_row;
-  height = world.height;
-  width = world.width;
-  fruits = world.fruits;
+//
+// //game letiables
+//   let length = 0;
+//   let height = 0;
+//   let width = 0;
+//   let fruits = 4;
+//   let fruits_eaten = 0;
+//
+//   let tail = [];
+//
+//   let fruit_map = [];
+//   let trainCol = 0;
+//   let trainRow = 0;
+//
+//   let running = false;
+//   let gameOver = false;
+//   let door_open = false;
 
-  tail.push({ col: trainCol, row: trainRow });
+//   let direction = down; // up = 0, down = -1, left = 1, right = 2
+//   let int;
+//   let win = false;
 
-  createMap();
-  createSnake();
-  draw_fruits();
-  draw_train();
-}
+  constructor() {
+    this.running = false;
 
-/**
- * Generates the map for the snake
- */
+    window.addEventListener("keydown", function key() {
+      // if key is W set direction up
+      let key = event.keyCode;
+      console.log(key);
+      if ((key == 119 || key == 87 || key == 38))
+        this.direction = up;
+      //if key is S set direction down
+      else if ((key == 115 || key == 83 || key == 40))
+        this.direction = down;
+      //if key is A set direction left
+      else if ((key == 97 || key == 65 || key == 37))
+        this.direction = left;
+      // if key is D set direction right
+      else if ((key == 100 || key == 68 || key == 39))
+        this.direction = right;
+      if (!running)
+        this.running = true;
+      else if (key == 32)
+        this.running = false;
 
-function createMap() {
-  document.write("<table>");
-  for (var y = 0; y < height; y++) {
-    document.write("<tr>");
-    for (var x = 0; x < width; x++) {
-      // console.log('" + x + "-" + y + "');
-      document.write("<td class='blank' id='" + x + "-" + y + "' ></td>");
+    });
+    this.run()
+  }
+
+
+  /*
+   entry point of the game
+   */
+  run() {
+    this.init();
+    int = setInterval(this.gameLoop, interval);
+  }
+
+  init() {
+    let world = levels[0];
+
+    this.fruit_map = world.fruit_map;
+    this.trainCol = world.start_col;
+    this.trainRow = world.start_row;
+    this.height = world.height;
+    this.width = world.width;
+    this.fruits = world.fruits;
+
+    this.tail = [{ col: this.trainCol, row: this.trainRow }];
+
+    this.createMap();
+    this.createSnake();
+    this.draw_fruits();
+    this.draw_train();
+  }
+
+  /**
+   * Generates the map for the snake
+   */
+
+  createMap() {
+    document.write("<table>");
+    for (let y = 0; y < this.height; y++) {
+      document.write("<tr>");
+      for (let x = 0; x < this.width; x++) {
+        // console.log('" + x + "-" + y + "');
+        document.write("<td class='blank' id='" + x + "-" + y + "' ></td>");
+      }
+      document.write("</tr>");
     }
-    document.write("</tr>");
-  }
-  document.write("</table>");
-}
-
-function createSnake() {
-  set(trainCol, trainRow, "snake");
-}
-
-function get(x, y) {
-  return document.getElementById(x + "-" + y);
-}
-
-function set(x, y, value) {
-  if (x != null && y != null)
-    console.log("---" + x + "-" + y +  get(x, y) );
-    get(x, y).setAttribute("class", value);
-}
-
-function getType(x, y) {
-  return get(x, y).getAttribute("class");
-}
-
-function gameLoop() {
-  draw_train();
-  if (running && !gameOver) {
-    update();
-    updateTail();
-    draw_train();
-  } else if (gameOver) {
-    clearInterval(int);
-  }
-}
-
-function update() {
-  if (direction == up)
-    trainRow--;
-  else if (direction == down)
-    trainRow++;
-  else if (direction == left)
-    trainCol--;
-  else if (direction == right)
-    trainCol++;
-
-  for (var i = 0; i < tail.length; i++) {
-    var it = tail[i];
-    if (it.row == trainRow && it.col == trainCol) {
-      gameOver = true;
-    }
+    document.write("</table>");
   }
 
-  if (fruit_map[trainRow][trainCol] >= 1) {
-    console.log("eat fruit");
-    fruits_eaten++;
-    var last = tail[tail.length - 1];
-    tail.push({ row: last.row, col: last.col });
-    fruit_map[trainRow][trainCol] = 0;
-    if (fruits_eaten == fruits) {
-      door_open = true;
-      draw_fruits();
+  createSnake() {
+    this.set(this.trainCol, this.trainRow, "snake");
+  }
+
+  get(x, y) {
+    return document.getElementById(x + "-" + y);
+  }
+
+  set(x, y, value) {
+    if (x != null && y != null) {
+      console.log("---" + x + "-" + y + this.get(x, y));
+      this.get(x, y).setAttribute("class", value);
     }
   }
 
-  if (fruit_map[trainRow][trainCol] == -2 && door_open) {
-    win = true;
+  getType(x, y) {
+    return this.get(x, y).getAttribute("class");
   }
 
-  if (fruit_map[trainRow][trainCol] < 0) {
-    gameOver = true;
+  gameLoop() {
+    this.draw_train();
+    if (this.running && !this.gameOver) {
+      this.update();
+      this.updateTail();
+      this.draw_train();
+    } else if (this.gameOver) {
+      clearInterval(int);
+    }
   }
 
-}
+  update() {
+    if (this.direction == up)
+      this.trainRow--;
+    else if (this.direction == down)
+      this.trainRow++;
+    else if (this.direction == left)
+      this.trainCol--;
+    else if (this.direction == right)
+      this.trainCol++;
 
-function draw_cell(tail, type) {
-  set(tail.col, tail.row, type);
-}
+    for (let i = 0; i < this.tail.length; i++) {
+      let it = tail[i];
+      if (it.row == this.trainRow && it.col == this.trainCol) {
+        gameOver = true;
+      }
+    }
 
-function updateTail() {
-  tail.unshift({ col: trainCol, row: trainRow });
-  draw_cell(tail.pop(), empty);
+    if (this.fruit_map[trainRow][trainCol] >= 1) {
+      console.log("eat fruit");
+      this.fruits_eaten++;
+      let last = tail[tail.length - 1];
+      this.tail.push({ row: last.row, col: last.col });
+      this.fruit_map[trainRow][trainCol] = 0;
+      if (this.fruits_eaten == this.fruits) {
+        this.door_open = true;
+        this.draw_fruits();
+      }
+    }
 
-}
+    if (this.fruit_map[trainRow][trainCol] == -2 && this.door_open) {
+      this.win = true;
+    }
 
-function draw_train() {
-  for (var i = 0; i < tail.length; i++) {
-    console.log(tail[i]);
-    draw_cell(tail[i], TRAIN);
+    if (this.fruit_map[trainRow][trainCol] < 0) {
+      this.gameOver = true;
+    }
+
   }
-}
 
-function draw_fruits() {
-  for (var i = 0; i < height; i++) {
-    fruit_map.push([]);
-    for (var j = 0; j < width; j++) {
-      if (fruit_map[i][j] > 0) {
-        draw_cell({ row: i, col: j }, fruit)
-      }
-      if (fruit_map[i][j] == -1) {
-        draw_cell({ row: i, col: j }, wall)
-      }
-      if (fruit_map[i][j] == -2 && door_open) {
-        draw_cell({ row: i, col: j }, DOOR_OPEN)
-      }
-      if (fruit_map[i][j] == -2 && !door_open) {
-        draw_cell({ row: i, col: j }, DOOR_CLOSE)
+
+  draw_cell(tail, type) {
+    this.set(tail.col, tail.row, type);
+  }
+
+  updateTail() {
+    this.tail.unshift({ col: this.trainCol, row: this.trainRow });
+    this.draw_cell(this.tail.pop(), empty);
+
+  }
+
+  draw_train() {
+    for (let i = 0; i < this.tail.length; i++) {
+      console.log(this.tail[i]);
+      this.draw_cell(this.tail[i], TRAIN);
+    }
+  }
+
+  draw_fruits() {
+    for (let i = 0; i < this.height; i++) {
+      for (let j = 0; j < this.width; j++) {
+        if (this.fruit_map[i][j] > 0) {
+          this.draw_cell({ row: i, col: j }, fruit)
+        }
+        if (this.fruit_map[i][j] == -1) {
+          this.draw_cell({ row: i, col: j }, wall)
+        }
+        if (this.fruit_map[i][j] == -2 && this.door_open) {
+          this.draw_cell({ row: i, col: j }, DOOR_OPEN)
+        }
+        if (this.fruit_map[i][j] == -2 && !this.door_open) {
+          this.draw_cell({ row: i, col: j }, DOOR_CLOSE)
+        }
       }
     }
   }
 }
 
-
-run();
+new Game();
