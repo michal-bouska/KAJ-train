@@ -23,25 +23,27 @@ class Game {
   constructor() {
     this.running = false;
 
+    const th = this;
+
     window.addEventListener("keydown", function key() {
       // if key is W set direction up
       let key = event.keyCode;
       console.log(key);
       if ((key == 119 || key == 87 || key == 38))
-        this.direction = up;
+        th.direction = up;
       //if key is S set direction down
       else if ((key == 115 || key == 83 || key == 40))
-        this.direction = down;
+        th.direction = down;
       //if key is A set direction left
       else if ((key == 97 || key == 65 || key == 37))
-        this.direction = left;
+        th.direction = left;
       // if key is D set direction right
       else if ((key == 100 || key == 68 || key == 39))
-        this.direction = right;
-      if (!running)
-        this.running = true;
+        th.direction = right;
+      if (!th.running)
+        th.running = true;
       else if (key == 32)
-        this.running = false;
+        th.running = false;
 
     });
     this.run()
@@ -53,11 +55,12 @@ class Game {
    */
   run() {
     this.init();
-    setInterval(this.gameLoop, interval);
+    setInterval(this.gameLoop.bind(this), interval);
   }
 
   init() {
     let world = levels[0];
+    this.fruits_eaten = 0;
 
     this.fruit_map = world.fruit_map;
     this.trainCol = world.start_col;
@@ -83,7 +86,6 @@ class Game {
     for (let y = 0; y < this.height; y++) {
       document.write("<tr>");
       for (let x = 0; x < this.width; x++) {
-        // console.log('" + x + "-" + y + "');
         document.write("<td class='blank' id='" + x + "-" + y + "' ></td>");
       }
       document.write("</tr>");
@@ -100,8 +102,7 @@ class Game {
   }
 
   set(x, y, value) {
-    if (x != null && y != null) {
-      console.log("---" + x + "-" + y + this.get(x, y));
+    if (x !== null && y !== null) {
       this.get(x, y).setAttribute("class", value);
     }
   }
@@ -122,42 +123,41 @@ class Game {
   }
 
   update() {
-    if (this.direction == up)
+    if (this.direction === up)
       this.trainRow--;
-    else if (this.direction == down)
+    else if (this.direction === down)
       this.trainRow++;
-    else if (this.direction == left)
+    else if (this.direction === left)
       this.trainCol--;
-    else if (this.direction == right)
+    else if (this.direction === right)
       this.trainCol++;
 
     for (let i = 0; i < this.tail.length; i++) {
-      let it = tail[i];
-      if (it.row == this.trainRow && it.col == this.trainCol) {
+      let it = this.tail[i];
+      if (it.row === this.trainRow && it.col === this.trainCol) {
         gameOver = true;
       }
     }
 
-    if (this.fruit_map[trainRow][trainCol] >= 1) {
+    if (this.fruit_map[this.trainRow][this.trainCol] >= 1) {
       console.log("eat fruit");
       this.fruits_eaten++;
-      let last = tail[tail.length - 1];
+      let last = this.tail[this.tail.length - 1];
       this.tail.push({ row: last.row, col: last.col });
-      this.fruit_map[trainRow][trainCol] = 0;
-      if (this.fruits_eaten == this.fruits) {
+      this.fruit_map[this.trainRow][this.trainCol] = 0;
+      if (this.fruits_eaten === this.fruits) {
         this.door_open = true;
         this.draw_fruits();
       }
     }
 
-    if (this.fruit_map[trainRow][trainCol] == -2 && this.door_open) {
+    if (this.fruit_map[this.trainRow][this.trainCol] === -2 && this.door_open) {
       this.win = true;
     }
 
-    if (this.fruit_map[trainRow][trainCol] < 0) {
+    if (this.fruit_map[this.trainRow][this.trainCol] < 0) {
       this.game_over = true;
     }
-
   }
 
   draw_cell(tail, type) {
@@ -172,7 +172,7 @@ class Game {
 
   draw_train() {
     for (let i = 0; i < this.tail.length; i++) {
-      console.log(this.tail[i]);
+      // console.log(this.tail[i]);
       this.draw_cell(this.tail[i], TRAIN);
     }
   }
