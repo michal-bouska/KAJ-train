@@ -29,20 +29,20 @@ class Game {
       // if key is W set direction up
       let key = event.keyCode;
       console.log(key);
-      if ((key == 119 || key == 87 || key == 38))
+      if ((key === 119 || key === 87 || key === 38))
         th.direction = up;
       //if key is S set direction down
-      else if ((key == 115 || key == 83 || key == 40))
+      else if ((key === 115 || key === 83 || key === 40))
         th.direction = down;
       //if key is A set direction left
-      else if ((key == 97 || key == 65 || key == 37))
+      else if ((key === 97 || key === 65 || key === 37))
         th.direction = left;
       // if key is D set direction right
-      else if ((key == 100 || key == 68 || key == 39))
+      else if ((key === 100 || key === 68 || key === 39))
         th.direction = right;
       if (!th.running)
         th.running = true;
-      else if (key == 32)
+      else if (key === 32)
         th.running = false;
 
     });
@@ -61,6 +61,7 @@ class Game {
   init() {
     let world = levels[0];
     this.fruits_eaten = 0;
+    this.game_over = false;
 
     this.fruit_map = world.fruit_map;
     this.trainCol = world.start_col;
@@ -135,7 +136,7 @@ class Game {
     for (let i = 0; i < this.tail.length; i++) {
       let it = this.tail[i];
       if (it.row === this.trainRow && it.col === this.trainCol) {
-        gameOver = true;
+        this.game_over = true;
       }
     }
 
@@ -183,13 +184,13 @@ class Game {
         if (this.fruit_map[i][j] > 0) {
           this.draw_cell({ row: i, col: j }, fruit)
         }
-        if (this.fruit_map[i][j] == -1) {
+        if (this.fruit_map[i][j] === -1) {
           this.draw_cell({ row: i, col: j }, wall)
         }
-        if (this.fruit_map[i][j] == -2 && this.door_open) {
+        if (this.fruit_map[i][j] === -2 && this.door_open) {
           this.draw_cell({ row: i, col: j }, DOOR_OPEN)
         }
-        if (this.fruit_map[i][j] == -2 && !this.door_open) {
+        if (this.fruit_map[i][j] === -2 && !this.door_open) {
           this.draw_cell({ row: i, col: j }, DOOR_CLOSE)
         }
       }
