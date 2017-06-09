@@ -20,29 +20,6 @@ const increment = 1;
 
 class Game {
 
-
-//
-// //game letiables
-//   let length = 0;
-//   let height = 0;
-//   let width = 0;
-//   let fruits = 4;
-//   let fruits_eaten = 0;
-//
-//   let tail = [];
-//
-//   let fruit_map = [];
-//   let trainCol = 0;
-//   let trainRow = 0;
-//
-//   let running = false;
-//   let gameOver = false;
-//   let door_open = false;
-
-//   let direction = down; // up = 0, down = -1, left = 1, right = 2
-//   let int;
-//   let win = false;
-
   constructor() {
     this.running = false;
 
@@ -76,7 +53,7 @@ class Game {
    */
   run() {
     this.init();
-    int = setInterval(this.gameLoop, interval);
+    setInterval(this.gameLoop, interval);
   }
 
   init() {
@@ -135,12 +112,12 @@ class Game {
 
   gameLoop() {
     this.draw_train();
-    if (this.running && !this.gameOver) {
+    if (this.running && !this.game_over) {
       this.update();
-      this.updateTail();
+      this.update_tail();
       this.draw_train();
-    } else if (this.gameOver) {
-      clearInterval(int);
+    } else if (this.game_over) {
+      // clearInterval();
     }
   }
 
@@ -178,17 +155,16 @@ class Game {
     }
 
     if (this.fruit_map[trainRow][trainCol] < 0) {
-      this.gameOver = true;
+      this.game_over = true;
     }
 
   }
-
 
   draw_cell(tail, type) {
     this.set(tail.col, tail.row, type);
   }
 
-  updateTail() {
+  update_tail() {
     this.tail.unshift({ col: this.trainCol, row: this.trainRow });
     this.draw_cell(this.tail.pop(), empty);
 
