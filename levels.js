@@ -120,7 +120,7 @@ levels = {
   },
   6: {
     password: "!!!",
-    name: "Vlajky 2",
+    name: "Vlajky 3",
     height: 9,
     width: 9,
     fruit_map: [
