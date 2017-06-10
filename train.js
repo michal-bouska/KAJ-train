@@ -19,7 +19,7 @@ const COLORS = {
 //  fruit color:
   0: "#FFFFFF",
   1: "#FF0000",
-  2: "#ff57dd",
+  2: "#1a00ff",
   3: "#fff431"
 };
 
@@ -34,6 +34,14 @@ const increment = 1;
 const CELL_SIZE = 18;
 const CELL_SPAN = 2;
 
+const sounds = [];
+sounds.push(new Audio('audio/01.mp3'));
+sounds.push(new Audio('audio/02.mp3'));
+sounds.push(new Audio('audio/03.wav'));
+
+const win_sound = new Audio("audio/win.wav");
+const failure_sound = new Audio("audio/failure.wav");
+
 
 class Game {
 
@@ -41,7 +49,7 @@ class Game {
     this.running = false;
     this.train_colors = [0];
 
-    document.write(`<canvas width="500" height="500" id="desk"></canvas>`);
+    document.getElementById("train_desk").innerHTML = `<canvas width="500" height="500" id="desk"></canvas>`;
 
     this.canvas = document.getElementById("desk").getContext("2d");
 
@@ -69,6 +77,8 @@ class Game {
 
     });
     this.run()
+
+
   }
 
 
@@ -100,8 +110,14 @@ class Game {
 
 
   gameLoop() {
+    if (Math.random() < 0.01) {
+      console.log("play audio");
+      const id = Math.floor(Math.random() * sounds.length);
+      sounds[id].play();
+    }
+
     this.draw_train();
-    if (this.running && !this.game_over) {
+    if (this.running && !this.game_over && !this.win) {
       this.update();
       this.update_tail();
       this.draw_fruits();
@@ -109,6 +125,13 @@ class Game {
       // this.draw_fruits();
     } else if (this.game_over) {
       // clearInterval();
+    }
+  }
+
+  game_over_f() {
+    this.game_over = true;
+    if (!this.win) {
+      failure_sound.play();
     }
   }
 
@@ -125,7 +148,7 @@ class Game {
     for (let i = 0; i < this.tail.length; i++) {
       let it = this.tail[i];
       if (it.row === this.trainRow && it.col === this.trainCol) {
-        this.game_over = true;
+        this.game_over_f()
       }
     }
 
@@ -144,10 +167,11 @@ class Game {
 
     if (this.fruit_map[this.trainRow][this.trainCol] === -2 && this.door_open) {
       this.win = true;
+      win_sound.play();
     }
 
     if (this.fruit_map[this.trainRow][this.trainCol] < 0) {
-      this.game_over = true;
+      this.game_over_f()
     }
   }
 
@@ -187,10 +211,10 @@ class Game {
 
   draw_train() {
     for (let i = 0; i < this.tail.length; i++) {
-      console.log("train:" + this.tail[i].row + " " + this.tail[i].col);
+      // console.log("train:" + this.tail[i].row + " " + this.tail[i].col);
       this.draw_cell(this.tail[i], TRAIN, this.train_colors[i]);
     }
-    console.log("-----")
+    // console.log("-----")
   }
 
   draw_fruits() {
