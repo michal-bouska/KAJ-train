@@ -4,8 +4,8 @@
 //tapes
 const empty = "blank";
 const TRAIN = "train";
-const fruit = "fruit";
-const wall = "wall";
+const FRUIT = "fruit";
+const WALL = "wall";
 const DOOR_OPEN = "door_open";
 const DOOR_CLOSE = "door_close";
 
@@ -15,7 +15,11 @@ const COLORS = {
   train: "#FFFFFF",
   fruit: "#FF0000",
   door_close: "#FF0000",
-  door_open: "#9ACD32"
+  door_open: "#9ACD32",
+//  fruit color:
+  1: "#FF0000",
+  2: "#ff57dd",
+  3: "#fff431"
 };
 
 const up = 0;
@@ -87,42 +91,18 @@ class Game {
 
     this.tail = [{ col: this.trainCol, row: this.trainRow }];
 
-    this.createMap();
-    this.createSnake();
     this.draw_fruits();
     this.draw_train();
   }
 
-  /**
-   * Generates the map for the snake
-   */
 
-  createMap() {
-
-    document.write("<table>");
-    for (let y = 0; y < this.height; y++) {
-      document.write("<tr>");
-      for (let x = 0; x < this.width; x++) {
-        document.write("<td class='blank' id='" + x + "-" + y + "' ></td>");
-
-      }
-      document.write("</tr>");
-    }
-    document.write("</table>");
-  }
-
-  createSnake() {
-    this.set(this.trainCol, this.trainRow, "snake");
-  }
-
-  get(x, y) {
-    return document.getElementById(x + "-" + y);
-  }
-
-  set(x, y, value) {
+  set(x, y, value, fruit = 0) {
+    console.log("x:" + x + ", y:" + y + " " + value + " " + fruit);
     if (x !== null && y !== null) {
-      this.get(x, y).setAttribute("class", value);
       this.canvas.fillStyle = COLORS[value];
+      if (value === FRUIT) {
+        this.canvas.fillStyle = COLORS[fruit];
+      }
       this.canvas.fillRect(x * (CELL_SIZE + CELL_SPAN), y * (CELL_SIZE + CELL_SPAN), CELL_SIZE, CELL_SIZE);
       this.canvas.stroke();
     }
@@ -157,7 +137,7 @@ class Game {
     }
 
     if (this.fruit_map[this.trainRow][this.trainCol] >= 1) {
-      console.log("eat fruit");
+      console.log("eat FRUIT");
       this.fruits_eaten++;
       let last = this.tail[this.tail.length - 1];
       this.tail.push({ row: last.row, col: last.col });
@@ -177,8 +157,8 @@ class Game {
     }
   }
 
-  draw_cell(tail, type) {
-    this.set(tail.col, tail.row, type);
+  draw_cell(tail, type, fruit = 0) {
+    this.set(tail.col, tail.row, type, fruit);
   }
 
   update_tail() {
@@ -198,10 +178,10 @@ class Game {
     for (let i = 0; i < this.height; i++) {
       for (let j = 0; j < this.width; j++) {
         if (this.fruit_map[i][j] > 0) {
-          this.draw_cell({ row: i, col: j }, fruit)
+          this.draw_cell({ row: i, col: j }, FRUIT, this.fruit_map[i][j])
         }
         if (this.fruit_map[i][j] === -1) {
-          this.draw_cell({ row: i, col: j }, wall)
+          this.draw_cell({ row: i, col: j }, WALL)
         }
         if (this.fruit_map[i][j] === -2 && this.door_open) {
           this.draw_cell({ row: i, col: j }, DOOR_OPEN)
