@@ -36,34 +36,22 @@ let CELL_SPAN = 4;
 let CELL_SUM_SUZE = CELL_SIZE + CELL_SPAN;
 
 const sounds = [];
-let suff = [".mp3", ".wav"];
 
-// let a = document.createElement('audio');
-//
-// if (a.canPlayType('audio/mpeg;')) {
-//   suff = "mp3"
-// } else {
-//   suff = "wav"
-// }
-
-function join_suff(name, suff) {
-  return suff.map(function (s) {
-    return name + s;
-  })
+function play_sound(sound) {
+  if (!edge) {
+    sound.play();
+  }
 }
 
-let edge = 0;
-
+let win_sound = null;
+let failure_sound = null;
 
 if (!edge) {
-  sounds.push(new Audio(join_suff("audio/01", suff)));
-  sounds.push(new Audio(join_suff("audio/02", suff)));
-  const win_sound = new Audio("audio/win.wav");
-  const failure_sound = new Audio("audio/failure.wav");
+  sounds.push(new Audio("audio/01.wav"));
+  sounds.push(new Audio("audio/02.wav"));
+  win_sound = new Audio("audio/win.wav");
+  failure_sound = new Audio("audio/failure.wav");
 }
-// sounds.push(new Audio('audio/02' + suff));
-// sounds.push(new Audio('audio/03' + suff));
-
 
 
 class Game {
@@ -149,7 +137,7 @@ class Game {
     if (Math.random() < 0.005) {
       console.log("play audio");
       const id = Math.floor(Math.random() * sounds.length);
-      sounds[id].play();
+      play_sound(sounds[id]);
     }
 
     this.draw_train();
@@ -166,7 +154,7 @@ class Game {
   game_over_f() {
     this.game_over = true;
     if (!this.win) {
-      failure_sound.play();
+      play_sound(failure_sound);
       this.reprint_callback(LOSE);
       if (Math.random() < 0.5) {
         document.getElementById("train_desk").className = "transform_3d";
@@ -188,7 +176,7 @@ class Game {
     scores = Array.from(new Set(scores));
     localStorage.setItem("ls" + this.level, JSON.stringify(scores));
     this.win = true;
-    win_sound.play();
+    play_sound(win_sound);
     this.reprint_callback(WIN);
   }
 
