@@ -49,6 +49,13 @@ class OveralInterface {
     // localStorage.removeItem("l1");
     // localStorage.removeItem("l2");
     this.print_prev_level();
+    this.init_game_from_url();
+    const th = this;
+
+    window.onhashchange = function() { th.init_game_from_url(); }
+  }
+
+  init_game_from_url() {
     let l = parseInt(new URL(document.URL).hash.substr(1));
     if (localStorage.getItem("l" + l) === null && localStorage.getItem("l" + (l - 1)) === null) {
       l = 0;
