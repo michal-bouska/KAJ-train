@@ -1,4 +1,4 @@
-const empty = "blank";
+const EMPTY = "blank";
 const TRAIN = "train";
 const FRUIT = "fruit";
 const WALL = "wall";
@@ -60,8 +60,8 @@ class Game {
     this.game_over = false;
 
     this.fruit_map = world.fruit_map;
-    this.trainCol = world.start_col;
-    this.trainRow = world.start_row;
+    this.train_col = world.start_col;
+    this.train_row = world.start_row;
     this.height = world.height;
     this.width = world.width;
     this.fruits = world.fruits;
@@ -72,7 +72,7 @@ class Game {
     this.level = level;
     this.dead = false;
 
-    this.tail = [{ col: this.trainCol, row: this.trainRow }];
+    this.tail = [{ col: this.train_col, row: this.train_row }];
 
     document.getElementById("train_desk").innerHTML = "<canvas width=" + this.width * CELL_SUM_SUZE + " height=" + this.height * CELL_SUM_SUZE + " id='desk'></canvas>";
 
@@ -158,51 +158,51 @@ class Game {
   }
 
   update() {
-    const prev_col = this.trainCol;
-    const prev_row = this.trainRow;
+    const prev_col = this.train_col;
+    const prev_row = this.train_row;
     this.change_move_direction();
 
-    if (!(prev_col === this.trainCol && prev_row === this.trainRow)) {
+    if (!(prev_col === this.train_col && prev_row === this.train_row)) {
       for (let i = 0; i < this.tail.length; i++) {
         let it = this.tail[i];
-        if (it.row === this.trainRow && it.col === this.trainCol) {
+        if (it.row === this.train_row && it.col === this.train_col) {
           this.game_over_f()
         }
       }
     }
 
-    if (this.fruit_map[this.trainRow][this.trainCol] >= 1) {
+    if (this.fruit_map[this.train_row][this.train_col] >= 1) {
       this.eat_fruit();
     }
 
-    if (this.fruit_map[this.trainRow][this.trainCol] === -2 && this.door_open) {
+    if (this.fruit_map[this.train_row][this.train_col] === -2 && this.door_open) {
       this.game_win();
     }
 
-    if (this.fruit_map[this.trainRow][this.trainCol] < 0) {
+    if (this.fruit_map[this.train_row][this.train_col] < 0) {
       this.game_over_f()
     }
   }
 
   change_move_direction() {
     if (this.direction === up)
-      this.trainRow--;
+      this.train_row--;
     else if (this.direction === down)
-      this.trainRow++;
+      this.train_row++;
     else if (this.direction === left)
-      this.trainCol--;
+      this.train_col--;
     else if (this.direction === right)
-      this.trainCol++;
+      this.train_col++;
   }
 
   eat_fruit() {
     this.fruits_eaten++;
-    const fruit = this.fruit_map[this.trainRow][this.trainCol];
+    const fruit = this.fruit_map[this.train_row][this.train_col];
     this.set_score(fruit);
     this.train_colors.push(fruit);
     let last = this.tail[this.tail.length - 1];
     this.tail.push({ row: last.row, col: last.col });
-    this.fruit_map[this.trainRow][this.trainCol] = 0;
+    this.fruit_map[this.train_row][this.train_col] = 0;
     if (this.fruits_eaten === this.fruits) {
       this.door_open = true;
       this.draw_fruits();
@@ -244,8 +244,8 @@ class Game {
   }
 
   update_tail() {
-    this.tail.unshift({ col: this.trainCol, row: this.trainRow });
-    this.draw_cell(this.tail.pop(), empty);
+    this.tail.unshift({ col: this.train_col, row: this.train_row });
+    this.draw_cell(this.tail.pop(), EMPTY);
   }
 
   draw_train() {
