@@ -9,6 +9,15 @@ const wall = "wall";
 const DOOR_OPEN = "door_open";
 const DOOR_CLOSE = "door_close";
 
+const COLORS = {
+  wall: "#008000",
+  blank: "#000000",
+  train: "#FFFFFF",
+  fruit: "#FF0000",
+  door_close: "#FF0000",
+  door_open: "#9ACD32"
+};
+
 const up = 0;
 const right = 1;
 const down = 2;
@@ -17,11 +26,17 @@ const left = 3;
 const interval = 200;
 const increment = 1;
 
+const CELL_SIZE = 18;
+const CELL_SPAN = 2;
+
 
 class Game {
 
   constructor() {
     this.running = false;
+    document.write(`<canvas width="500" height="500" id="desk"></canvas>`);
+
+    this.canvas = document.getElementById("desk").getContext("2d");
 
     const th = this;
 
@@ -83,11 +98,13 @@ class Game {
    */
 
   createMap() {
+
     document.write("<table>");
     for (let y = 0; y < this.height; y++) {
       document.write("<tr>");
       for (let x = 0; x < this.width; x++) {
         document.write("<td class='blank' id='" + x + "-" + y + "' ></td>");
+
       }
       document.write("</tr>");
     }
@@ -105,11 +122,10 @@ class Game {
   set(x, y, value) {
     if (x !== null && y !== null) {
       this.get(x, y).setAttribute("class", value);
+      this.canvas.fillStyle = COLORS[value];
+      this.canvas.fillRect(x * (CELL_SIZE + CELL_SPAN), y * (CELL_SIZE + CELL_SPAN), CELL_SIZE, CELL_SIZE);
+      this.canvas.stroke();
     }
-  }
-
-  getType(x, y) {
-    return this.get(x, y).getAttribute("class");
   }
 
   gameLoop() {
