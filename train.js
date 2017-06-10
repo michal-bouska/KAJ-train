@@ -17,6 +17,7 @@ const COLORS = {
   door_close: "#FF0000",
   door_open: "#9ACD32",
 //  fruit color:
+  0: "#FFFFFF",
   1: "#FF0000",
   2: "#ff57dd",
   3: "#fff431"
@@ -38,6 +39,8 @@ class Game {
 
   constructor() {
     this.running = false;
+    this.train_colors = [0];
+
     document.write(`<canvas width="500" height="500" id="desk"></canvas>`);
 
     this.canvas = document.getElementById("desk").getContext("2d");
@@ -96,24 +99,14 @@ class Game {
   }
 
 
-  set(x, y, value, fruit = 0) {
-    console.log("x:" + x + ", y:" + y + " " + value + " " + fruit);
-    if (x !== null && y !== null) {
-      this.canvas.fillStyle = COLORS[value];
-      if (value === FRUIT) {
-        this.canvas.fillStyle = COLORS[fruit];
-      }
-      this.canvas.fillRect(x * (CELL_SIZE + CELL_SPAN), y * (CELL_SIZE + CELL_SPAN), CELL_SIZE, CELL_SIZE);
-      this.canvas.stroke();
-    }
-  }
-
   gameLoop() {
     this.draw_train();
     if (this.running && !this.game_over) {
       this.update();
       this.update_tail();
+      this.draw_fruits();
       this.draw_train();
+      // this.draw_fruits();
     } else if (this.game_over) {
       // clearInterval();
     }
@@ -139,6 +132,7 @@ class Game {
     if (this.fruit_map[this.trainRow][this.trainCol] >= 1) {
       console.log("eat FRUIT");
       this.fruits_eaten++;
+      this.train_colors.push(this.fruit_map[this.trainRow][this.trainCol]);
       let last = this.tail[this.tail.length - 1];
       this.tail.push({ row: last.row, col: last.col });
       this.fruit_map[this.trainRow][this.trainCol] = 0;
@@ -157,6 +151,30 @@ class Game {
     }
   }
 
+  set(x, y, value, fruit = 0) {
+    // console.log("x:" + x + ", y:" + y + " " + value + " " + fruit);
+    if (x !== null && y !== null) {
+      this.canvas.fillStyle = COLORS[value];
+      if (value === FRUIT || value === TRAIN) {
+        this.canvas.fillStyle = COLORS[fruit];
+      }
+
+      var size_modifier = 0;
+      if (value === FRUIT) {
+        size_modifier = -4;
+      }
+
+      this.canvas.fillRect(x * (CELL_SIZE + CELL_SPAN) - size_modifier / 2, y * (CELL_SIZE + CELL_SPAN) - size_modifier / 2, CELL_SIZE + size_modifier, CELL_SIZE + size_modifier);
+      // if (value === TRAIN) {
+      //   this.canvas.strokeStyle = COLORS[value];
+      //   this.canvas.lineWidth=2;
+      //   this.canvas.rect(x * (CELL_SIZE + CELL_SPAN) - size_modifier / 2, y * (CELL_SIZE + CELL_SPAN) - size_modifier / 2, CELL_SIZE + size_modifier, CELL_SIZE + size_modifier);
+      //   this.canvas.stroke();
+      // }
+    }
+  }
+
+
   draw_cell(tail, type, fruit = 0) {
     this.set(tail.col, tail.row, type, fruit);
   }
@@ -169,12 +187,16 @@ class Game {
 
   draw_train() {
     for (let i = 0; i < this.tail.length; i++) {
-      // console.log(this.tail[i]);
-      this.draw_cell(this.tail[i], TRAIN);
+      console.log("train:" + this.tail[i].row + " " + this.tail[i].col);
+      this.draw_cell(this.tail[i], TRAIN, this.train_colors[i]);
     }
+    console.log("-----")
   }
 
   draw_fruits() {
+    // const canvas = document.getElementById("desk");
+    // this.canvas.fillStyle = "#000000";
+    // this.canvas.fillRect(0, 0, 500, 500);
     for (let i = 0; i < this.height; i++) {
       for (let j = 0; j < this.width; j++) {
         if (this.fruit_map[i][j] > 0) {
