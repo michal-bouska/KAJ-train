@@ -26,7 +26,7 @@ class OverallInterface {
 
   init_game_from_url() {
     let l = this.get_level_from_url();
-    if (localStorage.getItem("l" + l) === null && localStorage.getItem("l" + (l - 1)) === null) {
+    if ((localStorage.getItem("l" + l) === null && localStorage.getItem("l" + (l - 1)) === null) || levels[l] == null) {
       l = 0;
       window.location.hash = "#" + l;
     }
