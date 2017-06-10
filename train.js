@@ -90,14 +90,8 @@ class Game {
   }
 
   help_method() {
-      clearInterval(this.int_help);
 
-      let div = document.createElement('canvas');
-      div.width =  this.width * CELL_SUM_SUZE;
-      div.height = this.height * CELL_SUM_SUZE;
-      div.id = "desk";
-
-      document.getElementById("train_desk").appendChild(div);
+      document.getElementById("train_desk").innerHTML = "<canvas width=" + this.width * CELL_SUM_SUZE + " height=" + this.height * CELL_SUM_SUZE + " id='desk'></canvas>";
 
 
       this.canvas = document.getElementById("desk").getContext("2d");
