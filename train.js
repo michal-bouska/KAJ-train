@@ -46,10 +46,14 @@ const failure_sound = new Audio("audio/failure.wav");
 class OveralInterface {
 
   constructor() {
-    localStorage.removeItem("l1");
-    localStorage.removeItem("l2");
+    // localStorage.removeItem("l1");
+    // localStorage.removeItem("l2");
     this.print_prev_level();
-    new Game(0, this.reprint.bind(this));
+    let l = parseInt(new URL(document.URL).hash.substr(1));
+    if (localStorage.getItem("l" + l) === null && localStorage.getItem("l" + (l - 1)) === null) {
+      l = 0;
+    }
+    new Game(l, this.reprint.bind(this));
   }
 
   reprint() {
@@ -68,6 +72,7 @@ class OveralInterface {
         btn.appendChild(t);
         btn.addEventListener("click", function(){
           new Game(key, th.reprint.bind(th));
+          window.location.hash = "#" + key;
         });
         maps_menu.appendChild(btn);
       } else {
@@ -83,6 +88,10 @@ class OveralInterface {
 class Game {
 
   constructor(level, reprint_callback) {
+    if (level > 0 && localStorage.getItem("l" + level) === null) {
+      document.getElementById("train_desk").innerHTML = "Nepřístupný level";
+    }
+
     this.running = false;
     this.train_colors = [0];
     const th = this;
