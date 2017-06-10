@@ -28,7 +28,6 @@ const down = 2;
 const left = 3;
 
 const interval = 200;
-const increment = 1;
 
 let CELL_SIZE = 36;
 let CELL_SPAN = 4;
@@ -86,25 +85,17 @@ class Game {
 
     this.tail = [{ col: this.train_col, row: this.train_row }];
 
-    // this.int_help = setInterval(this.help_method.bind(this), 100);
 
     this.help_method();
   }
 
   help_method() {
-
-
-
-    // if (document.getElementById("train_desk") !== null) {
-
-
       clearInterval(this.int_help);
 
       let div = document.createElement('canvas');
       div.width =  this.width * CELL_SUM_SUZE;
       div.height = this.height * CELL_SUM_SUZE;
       div.id = "desk";
-      // div.innerHTML = "<canvas width=" + + " height=" +  + " id='desk'></canvas>";
 
       document.getElementById("train_desk").appendChild(div);
 
@@ -119,7 +110,6 @@ class Game {
       this.draw_train();
 
       this.int = setInterval(this.gameLoop.bind(this), interval);
-    // }
   }
 
   key_listener() {
