@@ -29,7 +29,6 @@ class OveralInterface {
   init_game_from_url() {
     let l = this.get_level_from_url();
     if (localStorage.getItem("l" + l) === null && localStorage.getItem("l" + (l - 1)) === null) {
-      document.getElementById("train_desk").remove();
       l = 0;
     }
     if (this.prev_game != null) {

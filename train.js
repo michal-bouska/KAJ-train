@@ -55,7 +55,9 @@ const failure_sound = new Audio("audio/failure.wav");
 class Game {
 
   constructor(level, reprint_callback, restart_callback) {
+    console.log("load level: " + level);
     if (level > 0 && localStorage.getItem("l" + level) === null) {
+      console.log("Level not allowed");
       document.getElementById("train_desk").innerHTML = "Nepřístupný level";
     }
 
@@ -84,22 +86,17 @@ class Game {
 
     this.tail = [{ col: this.train_col, row: this.train_row }];
 
-    this.int_help = setInterval(this.help_method.bind(this), 100);
+    // this.int_help = setInterval(this.help_method.bind(this), 100);
 
-    // this.help_method();
+    this.help_method();
   }
 
   help_method() {
 
-    // console.log("print");
-    console.log(document.getElementById("train_desk"));
 
-    // let a = document.getElementById("level");
-    // document.createEventObject()
 
-    if (document.getElementById("train_desk") !== null) {
+    // if (document.getElementById("train_desk") !== null) {
 
-      // console.log("aa");
 
       clearInterval(this.int_help);
 
@@ -122,7 +119,7 @@ class Game {
       this.draw_train();
 
       this.int = setInterval(this.gameLoop.bind(this), interval);
-    }
+    // }
   }
 
   key_listener() {
