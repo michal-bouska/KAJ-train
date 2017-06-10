@@ -92,7 +92,7 @@ class Game {
   help_method() {
 
     // console.log("print");
-    console.log(document.getElementById("level"));
+    console.log(document.getElementById("train_desk"));
 
     // let a = document.getElementById("level");
     // document.createEventObject()
