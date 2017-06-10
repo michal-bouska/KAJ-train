@@ -18,7 +18,8 @@ const COLORS = {
   0: "#FFFFFF",
   1: "#FF0000",
   2: "#1a00ff",
-  3: "#fff431"
+  3: "#fff431",
+  4: "#FFFFFF"
 };
 
 const up = 0;
@@ -29,13 +30,13 @@ const left = 3;
 const interval = 200;
 const increment = 1;
 
-const CELL_SIZE = 18;
-const CELL_SPAN = 2;
-const CELL_SUM_SUZE = CELL_SIZE + CELL_SPAN;
+let CELL_SIZE = 18;
+let CELL_SPAN = 2;
+let CELL_SUM_SUZE = CELL_SIZE + CELL_SPAN;
 
 const sounds = [];
 sounds.push(new Audio('audio/01.mp3'));
-sounds.push(new Audio('audio/02.mp3'));
+sounds.push(new Audio('audio/02.wav'));
 sounds.push(new Audio('audio/03.wav'));
 
 const win_sound = new Audio("audio/win.wav");

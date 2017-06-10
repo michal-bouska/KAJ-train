@@ -22,6 +22,7 @@ body {
     background: #000000;
     flex: 3 1 60%;
     order: 2;
+    flex-direction: column;
 }
 
 #main > nav {
@@ -32,6 +33,7 @@ body {
     background: #ccccff;
     flex: 1 6 20%;
     order: 1;
+    flex-direction: column;
 }
 
 #main > aside {
@@ -73,11 +75,26 @@ body {
 }
 
 #train_desk {
-    background-color: #000000;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
+#maps_menu * {
+    /*background-color: #000000;*/
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.white_text {
+    color: white;
+    text-align: center;
+    font: 32px Helvetica;
+    padding: 10px;
+}
+
+
 
 header, footer {
     display: block;

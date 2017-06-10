@@ -37,6 +37,11 @@ class OveralInterface {
     }
     console.log("create new game");
     this.prev_game = new Game(l, this.reprint.bind(this), this.restart.bind(this));
+    this.print_level(l);
+  }
+
+  print_level(level) {
+    document.getElementById("level").innerHTML = levels[level].name;
   }
 
   get_level_from_url() {
@@ -59,8 +64,10 @@ class OveralInterface {
     maps_menu.innerHTML = "";
     let prev = true;
     const th = this;
+    let i = 0;
     for (const key in levels) {
       if (localStorage.getItem("l" + key) !== null || prev) {
+        i++;
         const d = document.createElement("div");
         const btn = document.createElement("BUTTON");
         const t = document.createTextNode(levels[key].name);
@@ -69,14 +76,15 @@ class OveralInterface {
           window.location.hash = "#" + key;
           th.init_game_from_url()
         });
-        d.appendChild(btn);
-        maps_menu.appendChild(d);
+        // d.appendChild(btn);
+        maps_menu.appendChild(btn);
       } else {
       }
       if (localStorage.getItem("l" + key) === null) {
         prev = false;
       }
     }
+    // maps_menu.style.minHeight = 200 * i + "px";
   }
 
   print_best_score() {
