@@ -35,9 +35,19 @@ let CELL_SPAN = 4;
 let CELL_SUM_SUZE = CELL_SIZE + CELL_SPAN;
 
 const sounds = [];
-sounds.push(new Audio('audio/01.mp3'));
-sounds.push(new Audio('audio/02.wav'));
-sounds.push(new Audio('audio/03.wav'));
+let suff = ".mp3";
+
+// let a = document.createElement('audio');
+//
+// if (a.canPlayType('audio/mpeg;')) {
+//   suff = "mp3"
+// } else {
+//   suff = "wav"
+// }
+
+sounds.push(new Audio('audio/01' + suff));
+sounds.push(new Audio('audio/02' + suff));
+// sounds.push(new Audio('audio/03' + suff));
 
 const win_sound = new Audio("audio/win.wav");
 const failure_sound = new Audio("audio/failure.wav");
@@ -74,7 +84,22 @@ class Game {
 
     this.tail = [{ col: this.train_col, row: this.train_row }];
 
+    this.int_help = setInterval(this.help_method.bind(this), 10);
+
+    // this.help_method();
+  }
+
+  help_method() {
+
+    // console.log("print");
+    // console.log(document.getElementById("train_desk"));
+
     if (document.getElementById("train_desk") !== null) {
+
+      // console.log("aa");
+
+      clearInterval(this.int_help);
+
       document.getElementById("train_desk").innerHTML = "<canvas width=" + this.width * CELL_SUM_SUZE + " height=" + this.height * CELL_SUM_SUZE + " id='desk'></canvas>";
 
 
@@ -83,7 +108,6 @@ class Game {
       this.event_listener = this.key_listener.bind(this);
 
       document.addEventListener("keydown", this.event_listener, false);
-
 
       this.draw_fruits();
       this.draw_train();
