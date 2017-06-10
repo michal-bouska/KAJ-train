@@ -155,6 +155,7 @@ class Game {
     if (!this.win) {
       failure_sound.play();
       this.reprint_callback(LOSE);
+      document.getElementById("desk").className = "rotate";
     }
   }
 
