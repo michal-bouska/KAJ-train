@@ -43,6 +43,31 @@ sounds.push(new Audio('audio/03.wav'));
 const win_sound = new Audio("audio/win.wav");
 const failure_sound = new Audio("audio/failure.wav");
 
+class OveralInterface {
+
+  constructor() {
+    this.print_prev_level();
+    new Game(0);
+  }
+
+  print_prev_level() {
+    let maps_menu = document.getElementById("maps_menu");
+    // maps_menu.innerHTML = "Dostupné mapy:";
+    for (const key in levels) {
+      if (localStorage.getItem("l" + key) !== null) {
+        var btn = document.createElement("BUTTON");
+        var t = document.createTextNode(levels[key].name);
+        btn.appendChild(t);
+        maps_menu.appendChild(btn);
+      } else {
+
+      }
+    }
+
+
+  }
+}
+
 
 class Game {
 
@@ -83,9 +108,11 @@ class Game {
     this.height = world.height;
     this.width = world.width;
     this.fruits = world.fruits;
+    this.password = world.password;
     this.score = 0;
     this.increment = 1;
     this.last_eat = -1;
+    this.level = level;
 
     this.tail = [{ col: this.trainCol, row: this.trainRow }];
 
@@ -125,6 +152,12 @@ class Game {
     }
   }
 
+  game_win() {
+    localStorage.setItem("l" + this.level, this.password);
+    this.win = true;
+    win_sound.play();
+  }
+
   update() {
     this.change_move_direction();
 
@@ -140,8 +173,7 @@ class Game {
     }
 
     if (this.fruit_map[this.trainRow][this.trainCol] === -2 && this.door_open) {
-      this.win = true;
-      win_sound.play();
+      this.game_win();
     }
 
     if (this.fruit_map[this.trainRow][this.trainCol] < 0) {
@@ -163,13 +195,7 @@ class Game {
   eat_fruit() {
     this.fruits_eaten++;
     const fruit = this.fruit_map[this.trainRow][this.trainCol];
-    if (this.last_eat === fruit) {
-      this.increment = this.increment * 2;
-    } else {
-      this.increment = 1;
-      this.last_eat = fruit;
-    }
-    this.score = this.score + this.increment;
+    this.set_score(fruit);
     this.train_colors.push(fruit);
     let last = this.tail[this.tail.length - 1];
     this.tail.push({ row: last.row, col: last.col });
@@ -179,6 +205,17 @@ class Game {
       this.draw_fruits();
     }
     console.log("eat: " + fruit + ", score:" + this.score);
+  }
+
+  set_score(fruit) {
+    if (this.last_eat === fruit) {
+      this.increment = this.increment * 2;
+    } else {
+      this.increment = 1;
+      this.last_eat = fruit;
+    }
+    this.score = this.score + this.increment;
+    document.getElementById("score").innerHTML = this.score;
   }
 
   set(x, y, value, fruit = 0) {
@@ -206,21 +243,16 @@ class Game {
   update_tail() {
     this.tail.unshift({ col: this.trainCol, row: this.trainRow });
     this.draw_cell(this.tail.pop(), empty);
-
   }
 
   draw_train() {
     for (let i = 0; i < this.tail.length; i++) {
-      // console.log("train:" + this.tail[i].row + " " + this.tail[i].col);
       this.draw_cell(this.tail[i], TRAIN, this.train_colors[i]);
     }
-    // console.log("-----")
   }
 
   draw_fruits() {
-    // const canvas = document.getElementById("desk");
-    // this.canvas.fillStyle = "#000000";
-    // this.canvas.fillRect(0, 0, 500, 500);
+
     for (let i = 0; i < this.height; i++) {
       for (let j = 0; j < this.width; j++) {
         if (this.fruit_map[i][j] > 0) {
@@ -240,4 +272,4 @@ class Game {
   }
 }
 
-new Game(1);
+new OveralInterface();

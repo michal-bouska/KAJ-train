@@ -12,7 +12,7 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    flex-flow: row;
+    /*flex-flow: row;*/
 }
 
 #main > article {
@@ -42,6 +42,13 @@ body {
     background: #ccccff;
     flex: 1 6 20%;
     order: 3;
+}
+
+#train_desk {
+    background-color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 header, footer {
