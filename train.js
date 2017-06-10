@@ -90,9 +90,7 @@ class Game {
   }
 
   help_method() {
-
       document.getElementById("train_desk").innerHTML = "<canvas width=" + this.width * CELL_SUM_SUZE + " height=" + this.height * CELL_SUM_SUZE + " id='desk'></canvas>";
-
 
       this.canvas = document.getElementById("desk").getContext("2d");
 
