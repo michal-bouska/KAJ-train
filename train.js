@@ -103,7 +103,13 @@ class Game {
 
       clearInterval(this.int_help);
 
-      document.getElementById("train_desk").innerHTML = "<canvas width=" + this.width * CELL_SUM_SUZE + " height=" + this.height * CELL_SUM_SUZE + " id='desk'></canvas>";
+      let div = document.createElement('canvas');
+      div.width =  this.width * CELL_SUM_SUZE;
+      div.height = this.height * CELL_SUM_SUZE;
+      div.id = "desk";
+      // div.innerHTML = "<canvas width=" + + " height=" +  + " id='desk'></canvas>";
+
+      document.getElementById("train_desk").appendChild(div);
 
 
       this.canvas = document.getElementById("desk").getContext("2d");
@@ -181,7 +187,7 @@ class Game {
     }
     scores.push(this.score);
     scores = Array.from(new Set(scores));
-    localStorage.setItem("ls" + this.level, JSON.stringify(scores))
+    localStorage.setItem("ls" + this.level, JSON.stringify(scores));
     this.win = true;
     win_sound.play();
     this.reprint_callback(WIN);
