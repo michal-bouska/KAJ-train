@@ -1,13 +1,11 @@
-//settings
-
-
-//tapes
 const empty = "blank";
 const TRAIN = "train";
 const FRUIT = "fruit";
 const WALL = "wall";
 const DOOR_OPEN = "door_open";
 const DOOR_CLOSE = "door_close";
+const LOSE = "lose";
+const WIN = "win";
 
 const COLORS = {
   wall: "#008000",
@@ -117,7 +115,7 @@ class Game {
 
 
   gameLoop() {
-    if (Math.random() < 0.01) {
+    if (Math.random() < 0.005) {
       console.log("play audio");
       const id = Math.floor(Math.random() * sounds.length);
       sounds[id].play();
@@ -138,6 +136,7 @@ class Game {
     this.game_over = true;
     if (!this.win) {
       failure_sound.play();
+      this.reprint_callback(LOSE);
     }
   }
 
@@ -153,7 +152,7 @@ class Game {
     localStorage.setItem("ls" + this.level, JSON.stringify(scores))
     this.win = true;
     win_sound.play();
-    this.reprint_callback();
+    this.reprint_callback(WIN);
   }
 
   update() {

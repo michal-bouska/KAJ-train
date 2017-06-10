@@ -1,18 +1,18 @@
-/*body{*/
-    /*background-color:#000;*/
-/*}*/
-
 body {
     font: 24px Helvetica;
     background: #999999;
+    flex-direction: column;
+    display: flex;
 }
 
 #main {
+    flex-grow: 1;
     min-height: 800px;
     margin: 0;
     padding: 0;
     display: flex;
-    /*flex-flow: row;*/
+    flex-flow: row;
+    /*height: 100%;*/
 }
 
 #main > article {
@@ -42,6 +42,34 @@ body {
     background: #ccccff;
     flex: 1 6 20%;
     order: 3;
+    display: flex;
+    flex-direction: column;
+}
+
+.info {
+    padding: 5px;
+    border-radius: 7pt;
+    background: #ffec4e;
+    /*flex: 1 6 20%;*/
+    /*order: 3;*/
+    margin-top: auto;
+}
+
+.win {
+    padding: 5px;
+    border-radius: 7pt;
+    background: #00ff1a;
+    border: 1px solid #00b818;
+    margin-top: auto;
+}
+
+.lose {
+    margin: 4px;
+    padding: 5px;
+    border-radius: 7pt;
+    background: #ff000e;
+    border: 1px solid #c30006;
+    margin-top: auto;
 }
 
 #train_desk {
@@ -69,7 +97,6 @@ header, footer {
 
 
     #main > article, #main > nav, #main > aside {
-        /* Return them to document order */
         order: 0;
     }
 
