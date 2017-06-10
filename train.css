@@ -99,6 +99,14 @@ body {
     transform: rotate(45deg);
 }
 
+.transform_3d {
+    perspective: 500px;
+}
+
+.transform_3d canvas {
+    transform: rotateY(45deg);
+}
+
 
 
 header, footer {

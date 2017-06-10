@@ -36,7 +36,7 @@ let CELL_SPAN = 4;
 let CELL_SUM_SUZE = CELL_SIZE + CELL_SPAN;
 
 const sounds = [];
-let suff = ".mp3";
+let suff = [".mp3", ".wav"];
 
 // let a = document.createElement('audio');
 //
@@ -46,12 +46,25 @@ let suff = ".mp3";
 //   suff = "wav"
 // }
 
-sounds.push(new Audio('audio/01' + suff));
-sounds.push(new Audio('audio/02' + suff));
+function join_suff(name, suff) {
+  return suff.map(function (s) {
+    return name + s;
+  })
+}
+
+let edge = 0;
+
+
+if (!edge) {
+  sounds.push(new Audio(join_suff("audio/01", suff)));
+  sounds.push(new Audio(join_suff("audio/02", suff)));
+  const win_sound = new Audio("audio/win.wav");
+  const failure_sound = new Audio("audio/failure.wav");
+}
+// sounds.push(new Audio('audio/02' + suff));
 // sounds.push(new Audio('audio/03' + suff));
 
-const win_sound = new Audio("audio/win.wav");
-const failure_sound = new Audio("audio/failure.wav");
+
 
 class Game {
 
@@ -92,21 +105,21 @@ class Game {
   }
 
   help_method() {
-      document.getElementById("train_desk").innerHTML = "<canvas width=" + this.width * CELL_SUM_SUZE + " height=" + this.height * CELL_SUM_SUZE + " id='desk'></canvas>";
+    document.getElementById("train_desk").innerHTML = "<canvas width=" + this.width * CELL_SUM_SUZE + " height=" + this.height * CELL_SUM_SUZE + " id='desk'></canvas>";
 
-      this.canvas = document.getElementById("desk").getContext("2d");
+    this.canvas = document.getElementById("desk").getContext("2d");
 
-      this.event_listener = this.key_listener.bind(this);
+    this.event_listener = this.key_listener.bind(this);
 
-      document.addEventListener("keydown", this.event_listener, false);
+    document.addEventListener("keydown", this.event_listener, false);
 
-      this.draw_fruits();
-      this.draw_train();
+    this.draw_fruits();
+    this.draw_train();
 
-      this.int = setInterval(this.gameLoop.bind(this), interval);
+    this.int = setInterval(this.gameLoop.bind(this), interval);
   }
 
-  key_listener() {
+  key_listener(event) {
     if (!this.dead) {
       // if key is W set direction up
       let key = event.keyCode;
@@ -155,7 +168,11 @@ class Game {
     if (!this.win) {
       failure_sound.play();
       this.reprint_callback(LOSE);
-      document.getElementById("desk").className = "rotate";
+      if (Math.random() < 0.5) {
+        document.getElementById("train_desk").className = "transform_3d";
+      } else {
+        document.getElementById("desk").className = "rotate";
+      }
     }
   }
 
