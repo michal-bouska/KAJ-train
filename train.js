@@ -96,7 +96,7 @@ class Game {
     this.draw_fruits();
     this.draw_train();
 
-    setInterval(this.gameLoop.bind(this), interval);
+    this.int = setInterval(this.gameLoop.bind(this), interval);
   }
 
 
@@ -113,9 +113,8 @@ class Game {
       this.update_tail();
       this.draw_fruits();
       this.draw_train();
-      // this.draw_fruits();
     } else if (this.game_over) {
-      // clearInterval();
+      // this.int.clearInterval();
     }
   }
 
@@ -241,4 +240,4 @@ class Game {
   }
 }
 
-new Game(0);
+new Game(1);

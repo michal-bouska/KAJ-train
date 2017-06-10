@@ -1,6 +1,7 @@
 levels = {
   0: {
-    password: "Zara",
+    password: "init",
+    name: "INIT",
     height: 9,
     width: 9,
     fruit_map: [
@@ -20,6 +21,7 @@ levels = {
   },
   1: {
     password: "Zara",
+    name: "Barvičky",
     height: 9,
     width: 9,
     fruit_map: [
@@ -35,6 +37,25 @@ levels = {
     ],
     start_row: 4,
     start_col: 4,
-    fruits: 4
+    fruits: 24
+  },
+  2: {
+    password: "je",
+    name: "Optimalizovatelné barvičky",
+    height: 8,
+    width: 8,
+    fruit_map: [
+      [-1, -1, -1, -1, -1,  -1, -1, -1],
+      [-1, 1, 1, 2, 2,  3, 3, -1],
+      [-1, 1, 0, 0, 0, 0,  3, -1],
+      [-1, 2, 0, 0, 0, 0,  2, -1],
+      [-1, 2, 0, 0, 0, 0,  2, -2],
+      [-1, 3, 0, 0, 0, 0,  1, -1],
+      [-1, 3, 3, 2, 2, 1,  1, -1],
+      [-1, -1, -1, -1, -1,  -1, -1, -1]
+    ],
+    start_row: 4,
+    start_col: 4,
+    fruits: 20
   }
 };
