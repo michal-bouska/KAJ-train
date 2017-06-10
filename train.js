@@ -84,7 +84,7 @@ class Game {
 
     this.tail = [{ col: this.train_col, row: this.train_row }];
 
-    this.int_help = setInterval(this.help_method.bind(this), 10);
+    this.int_help = setInterval(this.help_method.bind(this), 100);
 
     // this.help_method();
   }
@@ -92,7 +92,10 @@ class Game {
   help_method() {
 
     // console.log("print");
-    console.log(document.getElementById("train_desk"));
+    console.log(document.getElementById("level"));
+
+    // let a = document.getElementById("level");
+    // document.createEventObject()
 
     if (document.getElementById("train_desk") !== null) {
 
