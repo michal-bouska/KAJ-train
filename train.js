@@ -52,15 +52,27 @@ class OveralInterface {
     this.init_game_from_url();
     const th = this;
 
-    window.onhashchange = function() { th.init_game_from_url(); }
+    window.onhashchange = function () {
+      th.init_game_from_url();
+    }
   }
 
   init_game_from_url() {
     let l = parseInt(new URL(document.URL).hash.substr(1));
     if (localStorage.getItem("l" + l) === null && localStorage.getItem("l" + (l - 1)) === null) {
+      document.getElementById("train_desk").remove();
       l = 0;
     }
-    new Game(l, this.reprint.bind(this));
+    if (this.prev_game != null) {
+      this.prev_game.destroy();
+    }
+    console.log("create new game");
+    this.prev_game = new Game(l, this.reprint.bind(this), this.restart.bind(this));
+  }
+
+  restart() {
+    this.print_prev_level();
+    this.init_game_from_url();
   }
 
   reprint() {
@@ -77,9 +89,9 @@ class OveralInterface {
         const btn = document.createElement("BUTTON");
         const t = document.createTextNode(levels[key].name);
         btn.appendChild(t);
-        btn.addEventListener("click", function(){
-          new Game(key, th.reprint.bind(th));
+        btn.addEventListener("click", function () {
           window.location.hash = "#" + key;
+          th.init_game_from_url()
         });
         maps_menu.appendChild(btn);
       } else {
@@ -94,40 +106,18 @@ class OveralInterface {
 
 class Game {
 
-  constructor(level, reprint_callback) {
+  constructor(level, reprint_callback, restart_callback) {
     if (level > 0 && localStorage.getItem("l" + level) === null) {
       document.getElementById("train_desk").innerHTML = "Nepřístupný level";
     }
 
     this.running = false;
     this.train_colors = [0];
-    const th = this;
 
     this.reprint_callback = reprint_callback;
+    this.restart_callback = restart_callback;
 
-    window.addEventListener("keydown", function key() {
-      // if key is W set direction up
-      let key = event.keyCode;
-      console.log(key);
-      if ((key === 119 || key === 87 || key === 38))
-        th.direction = up;
-      //if key is S set direction down
-      else if ((key === 115 || key === 83 || key === 40))
-        th.direction = down;
-      //if key is A set direction left
-      else if ((key === 97 || key === 65 || key === 37))
-        th.direction = left;
-      // if key is D set direction right
-      else if ((key === 100 || key === 68 || key === 39))
-        th.direction = right;
-      if (!th.running)
-        th.running = true;
-      else if (key === 32)
-        th.running = false;
-
-    });
-
-    let world = levels[level];
+    let world = JSON.parse(JSON.stringify(levels[level]));
     this.fruits_eaten = 0;
     this.game_over = false;
 
@@ -142,6 +132,7 @@ class Game {
     this.increment = 1;
     this.last_eat = -1;
     this.level = level;
+    this.dead = false;
 
     this.tail = [{ col: this.trainCol, row: this.trainRow }];
 
@@ -149,10 +140,40 @@ class Game {
 
     this.canvas = document.getElementById("desk").getContext("2d");
 
+    this.event_listener = this.key_listener.bind(this);
+
+    document.addEventListener("keydown", this.event_listener, false);
+
+
     this.draw_fruits();
     this.draw_train();
 
     this.int = setInterval(this.gameLoop.bind(this), interval);
+  }
+
+  key_listener() {
+    if (!this.dead) {
+      // if key is W set direction up
+      let key = event.keyCode;
+      console.log(key);
+      if ((key === 119 || key === 87 || key === 38))
+        this.direction = up;
+      //if key is S set direction down
+      else if ((key === 115 || key === 83 || key === 40))
+        this.direction = down;
+      //if key is A set direction left
+      else if ((key === 97 || key === 65 || key === 37))
+        this.direction = left;
+      // if key is D set direction right
+      else if ((key === 100 || key === 68 || key === 39))
+        this.direction = right;
+      if (key === 82)
+        this.restart_callback();
+      if (!this.running)
+        this.running = true;
+      else if (key === 32)
+        this.running = false;
+    }
   }
 
 
@@ -282,7 +303,6 @@ class Game {
   }
 
   draw_fruits() {
-
     for (let i = 0; i < this.height; i++) {
       for (let j = 0; j < this.width; j++) {
         if (this.fruit_map[i][j] > 0) {
@@ -299,6 +319,12 @@ class Game {
         }
       }
     }
+  }
+
+  destroy() {
+    this.dead = true;
+    document.removeEventListener("keydown", this.event_listener, false);
+    this.game_over = true;
   }
 }
 
