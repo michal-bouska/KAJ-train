@@ -95,7 +95,7 @@ body {
     display: flex;
 }
 
-.rotate{
+.rotate {
     transform: rotate(45deg);
 }
 
@@ -112,14 +112,121 @@ body {
     -webkit-animation: posun 4s linear infinite;
 }
 
-@keyframes posun {
-    0%, 100% { right: 0px;   top: 100px; }
-    25%      { right: 200px; top: 100px; }
-    50%      { right: 200px; top: 300px; }
-    75%      { right: 0px;   top: 300px; }
+.vanish {
+    display: block;
+
+    -webkit-animation: fadeInFromNone 3s linear infinite;
+    -moz-animation: fadeInFromNone 3s linear infinite;
+    -o-animation: fadeInFromNone 3s linear infinite;
+    animation: fadeInFromNone 3s linear infinite;
 }
 
+@-webkit-keyframes fadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
 
+    1% {
+        display: block;
+        opacity: 0;
+    }
+
+    50% {
+        display: block;
+        opacity: 1;
+    }
+
+    100% {
+        display: block;
+        opacity: 0;
+    }
+}
+
+@-moz-keyframes fadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    1% {
+        display: block;
+        opacity: 0;
+    }
+
+    50% {
+        display: block;
+        opacity: 1;
+    }
+
+    100% {
+        display: block;
+        opacity: 0;
+    }
+}
+
+@-o-keyframes fadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    1% {
+        display: block;
+        opacity: 0;
+    }
+
+    50% {
+        display: block;
+        opacity: 1;
+    }
+
+    100% {
+        display: block;
+        opacity: 0;
+    }
+}
+
+@keyframes fadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    1% {
+        display: block;
+        opacity: 0;
+    }
+
+    50% {
+        display: block;
+        opacity: 1;
+    }
+
+    100% {
+        display: block;
+        opacity: 0;
+    }
+}
+
+@keyframes posun {
+    0%, 100% {
+        right: 0px;
+        top: 100px;
+    }
+    25% {
+        right: 200px;
+        top: 100px;
+    }
+    50% {
+        right: 200px;
+        top: 300px;
+    }
+    75% {
+        right: 0px;
+        top: 300px;
+    }
+}
 
 header, footer {
     display: block;
@@ -136,7 +243,6 @@ header, footer {
     #main, #page {
         flex-direction: column;
     }
-
 
     #main > article, #main > nav, #main > aside {
         order: 0;

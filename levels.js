@@ -140,7 +140,7 @@ levels = {
   },
   7: {
     password: "bonus",
-    name: "bonus",
+    name: "Chyť mě, když to dokážeš!",
     height: 9,
     width: 9,
     fruit_map: [
@@ -158,5 +158,26 @@ levels = {
     start_col: 4,
     fruits: 4,
     bonus: {"train_desk": "move"}
+  },
+  8: {
+    password: "bonus",
+    name: "Vanish, skvrn a špíny se zbavíš!",
+    height: 9,
+    width: 9,
+    fruit_map: [
+      [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+      [-1, 0, 0, 0, 0, 0, 0, 0, -1],
+      [-1, 0, 0, 0, 0, 0, 0, 0, -1],
+      [-1, 0, 1, 0, 0, 0, 1, 0, -1],
+      [-1, 0, 0, 0, 0, 0, 0, 0, -2],
+      [-1, 0, 3, 0, 0, 0, 3, 0, -1],
+      [-1, 0, 0, 0, 0, 0, 0, 0, -1],
+      [-1, 0, 0, 0, 0, 0, 0, 0, -1],
+      [-1, -1, -1, -1, -1, -1, -1, -1, -1]
+    ],
+    start_row: 4,
+    start_col: 4,
+    fruits: 4,
+    bonus: {"train_desk": "vanish"}
   },
 };
