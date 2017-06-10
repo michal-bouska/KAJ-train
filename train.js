@@ -33,6 +33,7 @@ const increment = 1;
 
 const CELL_SIZE = 18;
 const CELL_SPAN = 2;
+const CELL_SUM_SUZE = CELL_SIZE + CELL_SPAN;
 
 const sounds = [];
 sounds.push(new Audio('audio/01.mp3'));
@@ -45,14 +46,9 @@ const failure_sound = new Audio("audio/failure.wav");
 
 class Game {
 
-  constructor() {
+  constructor(level) {
     this.running = false;
     this.train_colors = [0];
-
-    document.getElementById("train_desk").innerHTML = `<canvas width="500" height="500" id="desk"></canvas>`;
-
-    this.canvas = document.getElementById("desk").getContext("2d");
-
     const th = this;
 
     window.addEventListener("keydown", function key() {
@@ -76,22 +72,8 @@ class Game {
         th.running = false;
 
     });
-    this.run()
 
-
-  }
-
-
-  /*
-   entry point of the game
-   */
-  run() {
-    this.init();
-    setInterval(this.gameLoop.bind(this), interval);
-  }
-
-  init() {
-    let world = levels[0];
+    let world = levels[level];
     this.fruits_eaten = 0;
     this.game_over = false;
 
@@ -101,11 +83,20 @@ class Game {
     this.height = world.height;
     this.width = world.width;
     this.fruits = world.fruits;
+    this.score = 0;
+    this.increment = 1;
+    this.last_eat = -1;
 
     this.tail = [{ col: this.trainCol, row: this.trainRow }];
 
+    document.getElementById("train_desk").innerHTML = "<canvas width=" + this.width * CELL_SUM_SUZE + " height=" + this.height * CELL_SUM_SUZE + " id='desk'></canvas>";
+
+    this.canvas = document.getElementById("desk").getContext("2d");
+
     this.draw_fruits();
     this.draw_train();
+
+    setInterval(this.gameLoop.bind(this), interval);
   }
 
 
@@ -136,14 +127,7 @@ class Game {
   }
 
   update() {
-    if (this.direction === up)
-      this.trainRow--;
-    else if (this.direction === down)
-      this.trainRow++;
-    else if (this.direction === left)
-      this.trainCol--;
-    else if (this.direction === right)
-      this.trainCol++;
+    this.change_move_direction();
 
     for (let i = 0; i < this.tail.length; i++) {
       let it = this.tail[i];
@@ -153,16 +137,7 @@ class Game {
     }
 
     if (this.fruit_map[this.trainRow][this.trainCol] >= 1) {
-      console.log("eat FRUIT");
-      this.fruits_eaten++;
-      this.train_colors.push(this.fruit_map[this.trainRow][this.trainCol]);
-      let last = this.tail[this.tail.length - 1];
-      this.tail.push({ row: last.row, col: last.col });
-      this.fruit_map[this.trainRow][this.trainCol] = 0;
-      if (this.fruits_eaten === this.fruits) {
-        this.door_open = true;
-        this.draw_fruits();
-      }
+      this.eat_fruit();
     }
 
     if (this.fruit_map[this.trainRow][this.trainCol] === -2 && this.door_open) {
@@ -173,6 +148,38 @@ class Game {
     if (this.fruit_map[this.trainRow][this.trainCol] < 0) {
       this.game_over_f()
     }
+  }
+
+  change_move_direction() {
+    if (this.direction === up)
+      this.trainRow--;
+    else if (this.direction === down)
+      this.trainRow++;
+    else if (this.direction === left)
+      this.trainCol--;
+    else if (this.direction === right)
+      this.trainCol++;
+  }
+
+  eat_fruit() {
+    this.fruits_eaten++;
+    const fruit = this.fruit_map[this.trainRow][this.trainCol];
+    if (this.last_eat === fruit) {
+      this.increment = this.increment * 2;
+    } else {
+      this.increment = 1;
+      this.last_eat = fruit;
+    }
+    this.score = this.score + this.increment;
+    this.train_colors.push(fruit);
+    let last = this.tail[this.tail.length - 1];
+    this.tail.push({ row: last.row, col: last.col });
+    this.fruit_map[this.trainRow][this.trainCol] = 0;
+    if (this.fruits_eaten === this.fruits) {
+      this.door_open = true;
+      this.draw_fruits();
+    }
+    console.log("eat: " + fruit + ", score:" + this.score);
   }
 
   set(x, y, value, fruit = 0) {
@@ -189,12 +196,6 @@ class Game {
       }
 
       this.canvas.fillRect(x * (CELL_SIZE + CELL_SPAN) - size_modifier / 2, y * (CELL_SIZE + CELL_SPAN) - size_modifier / 2, CELL_SIZE + size_modifier, CELL_SIZE + size_modifier);
-      // if (value === TRAIN) {
-      //   this.canvas.strokeStyle = COLORS[value];
-      //   this.canvas.lineWidth=2;
-      //   this.canvas.rect(x * (CELL_SIZE + CELL_SPAN) - size_modifier / 2, y * (CELL_SIZE + CELL_SPAN) - size_modifier / 2, CELL_SIZE + size_modifier, CELL_SIZE + size_modifier);
-      //   this.canvas.stroke();
-      // }
     }
   }
 
@@ -240,4 +241,4 @@ class Game {
   }
 }
 
-new Game();
+new Game(0);
