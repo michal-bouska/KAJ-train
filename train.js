@@ -91,12 +91,12 @@ class Game {
 
   help_method() {
 
-    console.log("print");
+    // console.log("print");
     console.log(document.getElementById("train_desk"));
 
     if (document.getElementById("train_desk") !== null) {
 
-      console.log("aa");
+      // console.log("aa");
 
       clearInterval(this.int_help);
 
