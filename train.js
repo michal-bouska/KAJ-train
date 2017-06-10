@@ -19,7 +19,9 @@ const COLORS = {
   1: "#FF0000",
   2: "#1a00ff",
   3: "#fff431",
-  4: "#FFFFFF"
+  4: "#FFFFFF",
+  5: "#5bcefa",
+  6: "#f5a9b8"
 };
 
 const up = 0;
