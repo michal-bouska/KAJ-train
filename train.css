@@ -92,6 +92,7 @@ body {
     text-align: center;
     font: 32px Helvetica;
     padding: 10px;
+    display: flex;
 }
 
 
