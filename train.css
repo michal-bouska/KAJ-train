@@ -107,6 +107,18 @@ body {
     transform: rotateY(45deg);
 }
 
+.move {
+    position: relative;
+    -webkit-animation: posun 4s linear infinite;
+}
+
+@keyframes posun {
+    0%, 100% { right: 0px;   top: 100px; }
+    25%      { right: 200px; top: 100px; }
+    50%      { right: 200px; top: 300px; }
+    75%      { right: 0px;   top: 300px; }
+}
+
 
 
 header, footer {

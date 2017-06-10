@@ -76,6 +76,7 @@ class Game {
     this.fruit_map = world.fruit_map;
     this.train_col = world.start_col;
     this.train_row = world.start_row;
+    this.bonus = world.bonus;
     this.height = world.height;
     this.width = world.width;
     this.fruits = world.fruits;
@@ -94,6 +95,12 @@ class Game {
 
   help_method() {
     document.getElementById("train_desk").innerHTML = "<canvas width=" + this.width * CELL_SUM_SUZE + " height=" + this.height * CELL_SUM_SUZE + " id='desk'></canvas>";
+
+    for (const key in this.bonus) {
+      if (this.bonus.hasOwnProperty(key)) {
+        document.getElementById(key).className = this.bonus[key];
+      }
+    }
 
     this.canvas = document.getElementById("desk").getContext("2d");
 
