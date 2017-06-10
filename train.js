@@ -30,8 +30,8 @@ const left = 3;
 const interval = 200;
 const increment = 1;
 
-let CELL_SIZE = 18;
-let CELL_SPAN = 2;
+let CELL_SIZE = 36;
+let CELL_SPAN = 4;
 let CELL_SUM_SUZE = CELL_SIZE + CELL_SPAN;
 
 const sounds = [];
@@ -150,6 +150,7 @@ class Game {
       scores = JSON.parse(scores);
     }
     scores.push(this.score);
+    scores = Array.from(new Set(scores));
     localStorage.setItem("ls" + this.level, JSON.stringify(scores))
     this.win = true;
     win_sound.play();
@@ -157,12 +158,16 @@ class Game {
   }
 
   update() {
+    const prev_col = this.trainCol;
+    const prev_row = this.trainRow;
     this.change_move_direction();
 
-    for (let i = 0; i < this.tail.length; i++) {
-      let it = this.tail[i];
-      if (it.row === this.trainRow && it.col === this.trainCol) {
-        this.game_over_f()
+    if (!(prev_col === this.trainCol && prev_row === this.trainRow)) {
+      for (let i = 0; i < this.tail.length; i++) {
+        let it = this.tail[i];
+        if (it.row === this.trainRow && it.col === this.trainCol) {
+          this.game_over_f()
+        }
       }
     }
 
