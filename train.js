@@ -74,19 +74,22 @@ class Game {
 
     this.tail = [{ col: this.train_col, row: this.train_row }];
 
-    document.getElementById("train_desk").innerHTML = "<canvas width=" + this.width * CELL_SUM_SUZE + " height=" + this.height * CELL_SUM_SUZE + " id='desk'></canvas>";
-
-    this.canvas = document.getElementById("desk").getContext("2d");
-
-    this.event_listener = this.key_listener.bind(this);
-
-    document.addEventListener("keydown", this.event_listener, false);
+    if (document.getElementById("train_desk") !== null) {
+      document.getElementById("train_desk").innerHTML = "<canvas width=" + this.width * CELL_SUM_SUZE + " height=" + this.height * CELL_SUM_SUZE + " id='desk'></canvas>";
 
 
-    this.draw_fruits();
-    this.draw_train();
+      this.canvas = document.getElementById("desk").getContext("2d");
 
-    this.int = setInterval(this.gameLoop.bind(this), interval);
+      this.event_listener = this.key_listener.bind(this);
+
+      document.addEventListener("keydown", this.event_listener, false);
+
+
+      this.draw_fruits();
+      this.draw_train();
+
+      this.int = setInterval(this.gameLoop.bind(this), interval);
+    }
   }
 
   key_listener() {
