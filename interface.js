@@ -11,11 +11,9 @@ win_div.textContent = "Gratulace, vyhráli jste, můžete pokračovat do další
 const info_map = {"lose": lose_div,
     "win": win_div};
 
-class OveralInterface {
+class OverallInterface {
 
   constructor() {
-    // localStorage.removeItem("l1");
-    // localStorage.removeItem("l2");
     this.print_level_button();
     this.init_game_from_url();
     const th = this;
@@ -30,6 +28,7 @@ class OveralInterface {
     let l = this.get_level_from_url();
     if (localStorage.getItem("l" + l) === null && localStorage.getItem("l" + (l - 1)) === null) {
       l = 0;
+      window.location.hash = "#" + l;
     }
     if (this.prev_game != null) {
       this.prev_game.destroy();
@@ -124,4 +123,4 @@ class OveralInterface {
 }
 
 
-new OveralInterface();
+new OverallInterface();
