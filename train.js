@@ -46,35 +46,48 @@ const failure_sound = new Audio("audio/failure.wav");
 class OveralInterface {
 
   constructor() {
+    localStorage.removeItem("l1");
+    localStorage.removeItem("l2");
     this.print_prev_level();
-    new Game(0);
+    new Game(0, this.reprint.bind(this));
+  }
+
+  reprint() {
+    this.print_prev_level();
   }
 
   print_prev_level() {
     let maps_menu = document.getElementById("maps_menu");
-    // maps_menu.innerHTML = "Dostupné mapy:";
+    maps_menu.innerHTML = "";
+    let prev = true;
+    const th = this;
     for (const key in levels) {
-      if (localStorage.getItem("l" + key) !== null) {
-        var btn = document.createElement("BUTTON");
-        var t = document.createTextNode(levels[key].name);
+      if (localStorage.getItem("l" + key) !== null || prev) {
+        const btn = document.createElement("BUTTON");
+        const t = document.createTextNode(levels[key].name);
         btn.appendChild(t);
+        btn.addEventListener("click", function(){
+          new Game(key, th.reprint.bind(th));
+        });
         maps_menu.appendChild(btn);
       } else {
-
+      }
+      if (localStorage.getItem("l" + key) === null) {
+        prev = false;
       }
     }
-
-
   }
 }
 
 
 class Game {
 
-  constructor(level) {
+  constructor(level, reprint_callback) {
     this.running = false;
     this.train_colors = [0];
     const th = this;
+
+    this.reprint_callback = reprint_callback;
 
     window.addEventListener("keydown", function key() {
       // if key is W set direction up
@@ -156,6 +169,7 @@ class Game {
     localStorage.setItem("l" + this.level, this.password);
     this.win = true;
     win_sound.play();
+    this.reprint_callback();
   }
 
   update() {
