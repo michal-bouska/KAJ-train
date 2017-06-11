@@ -1,15 +1,18 @@
 # Komentář k hodnocení
-* JS práce se SVG - vše mám v canvasu
+* JS práce se SVG - vše mám v canvasu, tudíž SVG nepoužívám
+* Offline aplikace - celá aplikace je offline a cachovana, takže nevím, jestli se to počítá do js/offline aplikace
 * Použití JS frameworku či knihovny - používám knihovny Audio, LocalStorage, DnD, FileReader
 * Použití pokročilých JS API - používám knihovny Audio, LocalStorage, DnD, FileReader
 * Formulářové prvky - umožňuji vstup pomocí DaD a přetažení souboru
 * Kompatabilita v prohlížečích - zkoušel jsem hru v [vivaldim](https://www.vivaldi.com), Firefoxu, Chromu, Opeře, zde by měla fungovat bez problémů. Hra funguje i v Edgy, kde ale nejdou zvuky, protože není podporováno Audio.
 * Podpora mobilních telefonů - hra a celá webová stánka funguje na mobilních telefonech, jedinou podmínkou je mít telefon s klávesnicí. Buď to doporučuji Blackberry, nebo by mohlo fungovat OTG.
+* Funkční historie - lze použít pro přechod mezi levly, pokud jsme byli v minulosti v jiném levelu
 
 ## Vzhledem k tomu, že si můžeme vybrat tři podbody, které jsme z důvodu nevhodnosti pro úlohu nesplnili, viděl bych to takto
 * JS práce se SVG
 * Formulářové prvky
 * Použití JS frameworku či knihovny
+* pokud, alespoň jeden z předchozích bodů je splněný, poté - využití JS API pro zjišťování stavu
 
 # Implementace
 
