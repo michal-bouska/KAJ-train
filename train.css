@@ -3,16 +3,15 @@ body {
     background: #999999;
     flex-direction: column;
     display: flex;
+    min-height: 98vh;
 }
 
 #main {
     flex-grow: 1;
-    min-height: 800px;
     margin: 0;
     padding: 0;
     display: flex;
     flex-flow: row;
-    /*height: 100%;*/
 }
 
 #main > article {
@@ -21,6 +20,7 @@ body {
     border-radius: 7pt;
     background: #000000;
     flex: 3 1 60%;
+    flex-grow: 2;
     order: 2;
     flex-direction: column;
 }
@@ -34,6 +34,7 @@ body {
     flex: 1 6 20%;
     order: 1;
     flex-direction: column;
+
 }
 
 #main > aside {
@@ -46,6 +47,7 @@ body {
     order: 3;
     display: flex;
     flex-direction: column;
+
 }
 
 .info {
@@ -232,10 +234,17 @@ header, footer {
     display: block;
     margin: 4px;
     padding: 5px;
-    min-height: 100px;
+    min-height: 60px;
     border: 1px solid #eebb55;
     border-radius: 7pt;
     background: #ffeebb;
+}
+
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
 }
 
 /* Too narrow to support three columns */
