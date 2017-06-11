@@ -4,6 +4,7 @@ body {
     flex-direction: column;
     display: flex;
     min-height: 98vh;
+    margin: 0;
 }
 
 #main {
@@ -259,6 +260,5 @@ footer {
 
     #main > nav, #main > aside, header, footer {
         min-height: 50px;
-        max-height: 50px;
     }
 }
