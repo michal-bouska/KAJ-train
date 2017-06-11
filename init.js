@@ -1,5 +1,5 @@
 let edge = false;
-let sound_suff = "mp3"
+let sound_suff = "mp3";
 
 if (/Edge\/\d./i.test(navigator.userAgent)) {
   edge = true;
