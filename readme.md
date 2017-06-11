@@ -9,6 +9,7 @@
 * Formulářové prvky - umožňuji vstup pomocí DaD a přetažení souboru
 * Podpora mobilních telefonů - hra a celá webová stánka funguje na mobilních telefonech, jedinou podmínkou je mít telefon s klávesnicí. Buď to doporučuji Blackberry, nebo by mohlo fungovat OTG.
 * Funkční historie - lze použít pro přechod mezi levly, pokud jsme byli v minulosti v jiném levelu
+* CSS3 transformace 2D/3D, CSS3 transitions/animations - vyšší levely hry
 
 ## Vzhledem k tomu, že si můžeme vybrat tři podbody, které jsme z důvodu nevhodnosti pro úlohu nesplnili, viděl bych to takto
 * JS práce se SVG
