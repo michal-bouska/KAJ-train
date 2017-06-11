@@ -57,11 +57,7 @@ if (!edge) {
 class Game {
 
   constructor(level, reprint_callback, restart_callback) {
-    console.log("load level: " + level);
-    if (level > 0 && localStorage.getItem("l" + level) === null) {
-      console.log("Level not allowed");
-      document.getElementById("train_desk").innerHTML = "Nepřístupný level";
-    }
+    // console.log("load level: " + level);
 
     this.running = false;
     this.train_colors = [0];
@@ -69,7 +65,7 @@ class Game {
     this.reprint_callback = reprint_callback;
     this.restart_callback = restart_callback;
 
-    let world = JSON.parse(JSON.stringify(levels[level]));
+    let world = JSON.parse(JSON.stringify(level));
     this.fruits_eaten = 0;
     this.game_over = false;
 
@@ -84,11 +80,10 @@ class Game {
     this.score = 0;
     this.increment = 1;
     this.last_eat = -1;
-    this.level = level;
+    this.level = level.level;
     this.dead = false;
 
     this.tail = [{ col: this.train_col, row: this.train_row }];
-
 
     this.help_method();
   }
@@ -119,7 +114,7 @@ class Game {
     if (!this.dead) {
       // if key is W set direction up
       let key = event.keyCode;
-      console.log(key);
+      // console.log(key);
       if ((key === 119 || key === 87 || key === 38))
         this.direction = up;
       //if key is S set direction down
@@ -143,7 +138,7 @@ class Game {
 
   gameLoop() {
     if (Math.random() < 0.005) {
-      console.log("play audio");
+      // console.log("play audio");
       const id = Math.floor(Math.random() * sounds.length);
       play_sound(sounds[id]);
     }
@@ -238,7 +233,7 @@ class Game {
       this.door_open = true;
       this.draw_fruits();
     }
-    console.log("eat: " + fruit + ", score:" + this.score);
+    // console.log("eat: " + fruit + ", score:" + this.score);
   }
 
   set_score(fruit) {

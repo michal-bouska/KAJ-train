@@ -8,8 +8,10 @@ const win_div = document.createElement("div");
 win_div.textContent = "Gratulace, vyhráli jste, můžete pokračovat do dalšího levelu.";
 
 
-const info_map = {"lose": lose_div,
-    "win": win_div};
+const info_map = {
+  "lose": lose_div,
+  "win": win_div
+};
 
 class OverallInterface {
 
@@ -22,6 +24,13 @@ class OverallInterface {
       th.init_game_from_url();
     };
     this.reprint();
+    this.init_dad();
+  }
+
+  init_dad() {
+    const dropZone = document.getElementById('drop_zone');
+    dropZone.addEventListener('dragover', this.handleDragOver.bind(this), false);
+    dropZone.addEventListener('drop', this.handleFileSelect.bind(this), false);
   }
 
   init_game_from_url() {
@@ -30,16 +39,57 @@ class OverallInterface {
       l = 0;
       window.location.hash = "#" + l;
     }
+    this.init_level(levels[l]);
+  }
+
+  init_level(l) {
     if (this.prev_game != null) {
       this.prev_game.destroy();
     }
-    console.log("create new game");
     this.prev_game = new Game(l, this.reprint.bind(this), this.restart.bind(this));
     this.print_level(l);
   }
 
+  handleFileSelect(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    const files = evt.dataTransfer.files; // FileList object
+
+
+    for (let i = 0; i < files.length; i++) {
+
+      const f = files[i];
+      let reader = new FileReader();
+      const th = this;
+
+      reader.onload = (function (theFile) {
+        return function (e) {
+          const help = e.target.result;
+          if (help != null) {
+            let level = JSON.parse(help);
+
+            console.log(level);
+            level.level = -1;
+            th.init_level(level)
+          }
+
+        };
+      })(f);
+
+      reader.readAsText(f);
+
+
+    }
+  }
+
+  handleDragOver(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+  }
+
   print_level(level) {
-    document.getElementById("level").innerHTML = levels[level].name;
+    document.getElementById("level").innerHTML = level.name;
   }
 
   get_level_from_url() {
@@ -122,6 +172,9 @@ class OverallInterface {
     }
   }
 }
+
+
+// Setup the dnd listeners.
 
 
 new OverallInterface();

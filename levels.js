@@ -1,5 +1,6 @@
 levels = {
   0: {
+    level : 0,
     password: "init",
     name: "INIT",
     height: 9,
@@ -21,6 +22,7 @@ levels = {
     bonus: {}
   },
   1: {
+    level : 1,
     password: "Zara",
     name: "Barvičky",
     height: 9,
@@ -42,6 +44,7 @@ levels = {
     bonus: {}
   },
   2: {
+    level : 2,
     password: "je",
     name: "Optimalizovatelné barvičky",
     height: 8,
@@ -62,6 +65,7 @@ levels = {
     bonus: {}
   },
   3: {
+    level : 3,
     password: "proste",
     name: "Sloupečky",
     height: 9,
@@ -83,6 +87,7 @@ levels = {
     bonus: {}
   },
   4: {
+    level : 4,
     password: "nejlepsi",
     name: "Vlajky 1",
     height: 9,
@@ -104,6 +109,7 @@ levels = {
     bonus: {}
   },
   5: {
+    level : 5,
     password: "!!!",
     name: "Vlajky 2",
     height: 9,
@@ -125,6 +131,7 @@ levels = {
     bonus: {}
   },
   6: {
+    level : 6,
     password: "!!!",
     name: "Vlajky 3",
     height: 9,
@@ -146,6 +153,7 @@ levels = {
     bonus: {}
   },
   7: {
+    level : 7,
     password: "bonus",
     name: "Chyť mě, když to dokážeš!",
     height: 9,
@@ -167,6 +175,7 @@ levels = {
     bonus: {"train_desk": "move"}
   },
   8: {
+    level : 8,
     password: "bonus",
     name: "Vanish, skvrn a špíny se zbavíš!",
     height: 9,
@@ -188,6 +197,7 @@ levels = {
     bonus: {"train_desk": "vanish"}
   },
   9: {
+    level : 9,
     password: "proste",
     name: "Překážky",
     height: 9,
@@ -209,6 +219,7 @@ levels = {
     bonus: {}
   },
   10: {
+    level : 10,
     password: "proste",
     name: "Jezdec",
     height: 9,
