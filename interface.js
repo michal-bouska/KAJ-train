@@ -13,11 +13,22 @@ a.href =  'dadlevel.txt';
 a.innerHTML = "ZDE";
 default_div.appendChild(a);
 
+const load_err = document.createElement("div");
+load_err.textContent = "Požadovaný soubor se nepodařilo načíst";
+
 
 const info_map = {
   "lose": lose_div,
   "win": win_div,
-  0: default_div
+  0: default_div,
+  "load_err": load_err
+};
+
+const info_class_map = {
+  "lose": "lose",
+  "win": "win",
+  0: default_div,
+  "load_err": "lose"
 };
 
 class OverallInterface {
@@ -73,8 +84,13 @@ class OverallInterface {
         return function (e) {
           const help = e.target.result;
           if (help != null) {
-            let level = JSON.parse(help);
-
+            let level;
+            try {
+              level = JSON.parse(help);
+            }
+            catch(err) {
+              th.print_info("load_err");
+            }
             console.log(level);
             level.level = -1;
             th.init_level(level)
@@ -84,8 +100,6 @@ class OverallInterface {
       })(f);
 
       reader.readAsText(f);
-
-
     }
   }
 
@@ -132,7 +146,6 @@ class OverallInterface {
           window.location.hash = "#" + key;
           th.init_game_from_url()
         });
-        // d.appendChild(btn);
         maps_menu.appendChild(btn);
       } else {
       }
@@ -140,7 +153,6 @@ class OverallInterface {
         prev = false;
       }
     }
-    // maps_menu.style.minHeight = 200 * i + "px";
   }
 
   print_best_score() {
@@ -173,7 +185,7 @@ class OverallInterface {
     let foot = document.getElementsByTagName("footer")[0];
     foot.innerHTML = "";
     if (code !== 0) {
-      foot.className = code;
+      foot.className = info_class_map[code];
     }
     const d = info_map[code];
     foot.appendChild(d);
