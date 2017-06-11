@@ -17,7 +17,8 @@ levels = {
     ],
     start_row: 4,
     start_col: 4,
-    fruits: 4
+    fruits: 4,
+    bonus: {}
   },
   1: {
     password: "Zara",
@@ -37,7 +38,8 @@ levels = {
     ],
     start_row: 4,
     start_col: 4,
-    fruits: 24
+    fruits: 24,
+    bonus: {}
   },
   2: {
     password: "je",
@@ -56,7 +58,8 @@ levels = {
     ],
     start_row: 4,
     start_col: 4,
-    fruits: 20
+    fruits: 20,
+    bonus: {}
   },
   3: {
     password: "proste",
@@ -76,7 +79,8 @@ levels = {
     ],
     start_row: 4,
     start_col: 1,
-    fruits: 15
+    fruits: 15,
+    bonus: {}
   },
   4: {
     password: "nejlepsi",
@@ -96,7 +100,8 @@ levels = {
     ],
     start_row: 4,
     start_col: 1,
-    fruits: 25
+    fruits: 25,
+    bonus: {}
   },
   5: {
     password: "!!!",
@@ -116,7 +121,8 @@ levels = {
     ],
     start_row: 4,
     start_col: 1,
-    fruits: 25
+    fruits: 25,
+    bonus: {}
   },
   6: {
     password: "!!!",
@@ -136,7 +142,8 @@ levels = {
     ],
     start_row: 4,
     start_col: 1,
-    fruits: 25
+    fruits: 25,
+    bonus: {}
   },
   7: {
     password: "bonus",
@@ -198,7 +205,8 @@ levels = {
     ],
     start_row: 4,
     start_col: 1,
-    fruits: 15
+    fruits: 15,
+    bonus: {}
   },
   10: {
     password: "proste",
