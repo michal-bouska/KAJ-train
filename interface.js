@@ -186,6 +186,8 @@ class OverallInterface {
     foot.innerHTML = "";
     if (code !== 0) {
       foot.className = info_class_map[code];
+    } else {
+      foot.className = "";
     }
     const d = info_map[code];
     foot.appendChild(d);
