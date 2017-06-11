@@ -49,6 +49,7 @@ let failure_sound = null;
 if (!edge) {
   sounds.push(new Audio("audio/01.wav"));
   sounds.push(new Audio("audio/02.wav"));
+  sounds.push(new Audio("audio/03.wav"));
   win_sound = new Audio("audio/win.wav");
   failure_sound = new Audio("audio/failure.wav");
 }
