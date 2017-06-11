@@ -8,3 +8,8 @@ interface.js
 levels.js
 train.css
 train.js
+audio/01.wav
+audio/02.wav
+audio/03.wav
+audio/failure.wav
+audio/win.wav
