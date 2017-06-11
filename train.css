@@ -20,6 +20,17 @@ body {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
+#main > section {
+    margin: 4px;
+    padding: 5px;
+    border-radius: 7pt;
+    background: #000000;
+    flex: 3 1 60%;
+    flex-grow: 2;
+    order: 2;
+    flex-direction: column;
+}
+
 #main > article {
     margin: 4px;
     padding: 5px;
