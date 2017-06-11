@@ -3,11 +3,11 @@ CACHE MANIFEST
 
 CACHE:
 index.html
-init.js
-interface.js
-levels.js
-train.css
-train.js
+js/init.js
+js/interface.js
+js/levels.js
+css/train.css
+js/train.js
 audio/01.wav
 audio/02.wav
 audio/03.wav

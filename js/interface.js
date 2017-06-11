@@ -9,7 +9,7 @@ win_div.textContent = "Gratulace, vyhráli jste, můžete pokračovat do další
 const default_div = document.createElement("div");
 default_div.textContent = "Můžete přetáhnout vlastnoručně vytvořený level na stránku, který se následně načte. Vzorový level ";
 const a = document.createElement("a");
-a.href =  'dadlevel.txt';
+a.href =  'example/dadlevel.txt';
 a.innerHTML = "ZDE";
 default_div.appendChild(a);
 
