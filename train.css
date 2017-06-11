@@ -13,6 +13,7 @@ body {
     padding: 0;
     display: flex;
     flex-flow: row;
+    min-height: 80vh;
 }
 
 #main > article {
@@ -48,7 +49,6 @@ body {
     order: 3;
     display: flex;
     flex-direction: column;
-
 }
 
 .info {
@@ -231,14 +231,36 @@ body {
     }
 }
 
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    min-width: 20vw;
+}
+
+.button:hover {
+    background-color: #555555;
+    color: white;
+}
+
 header, footer {
     display: block;
     margin: 4px;
     padding: 5px;
-    min-height: 60px;
     border: 1px solid #eebb55;
     border-radius: 7pt;
     background: #ffeebb;
+    min-height: 5vh;
+
 }
 
 footer {

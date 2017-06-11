@@ -68,6 +68,7 @@ class OverallInterface {
         i++;
         const d = document.createElement("div");
         const btn = document.createElement("BUTTON");
+        btn.className = "button";
         const t = document.createTextNode(levels[key].name);
         btn.appendChild(t);
         btn.addEventListener("click", function () {
