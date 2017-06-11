@@ -17,7 +17,7 @@ body {
 }
 
 #main > * {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 #main > div {
@@ -265,8 +265,12 @@ body {
 
 /* WebKit and Opera browsers */
 @-webkit-keyframes spinner {
-    from { -webkit-transform: rotateY(0deg);    }
-    to   { -webkit-transform: rotateY(-360deg); }
+    from {
+        -webkit-transform: rotateY(0deg);
+    }
+    to {
+        -webkit-transform: rotateY(-360deg);
+    }
 }
 
 /* all other browsers */
@@ -283,7 +287,6 @@ body {
     }
 }
 
-
 .button {
     background-color: #4CAF50; /* Green */
     border: none;
@@ -298,7 +301,7 @@ body {
     transition-duration: 0.4s;
     cursor: pointer;
     min-width: 20vw;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .button:hover {
@@ -314,8 +317,18 @@ header, footer {
     border-radius: 7pt;
     background: #ffeebb;
     min-height: 5vh;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
+}
+
+header {
+    color: #000000;
+    font-family: 'Raleway', sans-serif;
+    font-size: 62px;
+    font-weight: 800;
+    line-height: 72px;
+    text-align: center;
+    text-transform: uppercase;
 }
 
 footer {
