@@ -6,11 +6,18 @@ const lose_div = document.createElement("div");
 lose_div.textContent = "Prohráli jste, můžete to zkusit znovu, nebo jít do jiného levelu.";
 const win_div = document.createElement("div");
 win_div.textContent = "Gratulace, vyhráli jste, můžete pokračovat do dalšího levelu.";
+const default_div = document.createElement("div");
+default_div.textContent = "Můžete přetáhnout vlastnoručně vytvořený level na stránku, který se následně načte. Vzorový level ";
+const a = document.createElement("a");
+a.href =  'dadlevel.txt';
+a.innerHTML = "ZDE";
+default_div.appendChild(a);
 
 
 const info_map = {
   "lose": lose_div,
-  "win": win_div
+  "win": win_div,
+  0: default_div
 };
 
 class OverallInterface {
@@ -163,13 +170,13 @@ class OverallInterface {
   }
 
   print_info(code) {
+    let foot = document.getElementsByTagName("footer")[0];
+    foot.innerHTML = "";
     if (code !== 0) {
-      let foot = document.getElementsByTagName("footer")[0];
-      foot.innerHTML = "";
       foot.className = code;
-      const d = info_map[code];
-      foot.appendChild(d);
     }
+    const d = info_map[code];
+    foot.appendChild(d);
   }
 }
 
