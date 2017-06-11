@@ -28,3 +28,6 @@ A jako poslední důležitou vlastnost, tato třída vytváří a ničí instanc
 ## init.js
 V tomto skriptu jsou hlavně inicializační prvky, konkrétně detekce jestli se jedná a edge.
 Jednu dobu zde sídlil polymorfismus.
+
+## levels.js
+V této třídě jsou poze uložené jednotlivé mapy.
