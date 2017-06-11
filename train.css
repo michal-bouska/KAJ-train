@@ -16,6 +16,10 @@ body {
     min-height: 80vh;
 }
 
+#main > * {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
 #main > article {
     margin: 4px;
     padding: 5px;
@@ -245,6 +249,7 @@ body {
     transition-duration: 0.4s;
     cursor: pointer;
     min-width: 20vw;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
 .button:hover {
@@ -260,6 +265,7 @@ header, footer {
     border-radius: 7pt;
     background: #ffeebb;
     min-height: 5vh;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 
 }
 
