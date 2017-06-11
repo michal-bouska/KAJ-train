@@ -3,6 +3,8 @@
 * Použití JS frameworku či knihovny - používám knihovny Audio, LocalStorage, DnD, FileReader
 * Použití pokročilých JS API - používám knihovny Audio, LocalStorage, DnD, FileReader
 * Formulářové prvky - umožňuji vstup pomocí DaD a přetažení souboru
+* Kompatabilita v prohlížečích - zkoušel jsem hru v [vivaldim](vivaldi.com), Firefoxu, Chromu, Opeře, zde by měla fungovat bez problémů. Hra funguje i v Edgy, kde ale nejdou zvuky, protože není podporováno Audio.
+* Podpora mobilních telefonů - hra a celá webová stánka funguje na mobilních telefonech, jedinou podmínkou je mít telefon s klávesnicí. Buď to doporučuji Blackberry, nebo by mohlo fungovat OTG.
 
 ## Vzhledem k tomu, že si můžeme vybrat tři podbody, které jsme z důvodu nevhodnosti pro úlohu nesplnili, viděl bych to takto
 * JS práce se SVG
@@ -31,3 +33,4 @@ Jednu dobu zde sídlil polymorfismus.
 
 ## levels.js
 V této třídě jsou poze uložené jednotlivé mapy.
+
