@@ -1,3 +1,6 @@
+# Hra
+[zde](https://michal-bouska.github.io/KAJ-train/)
+
 # Komentář k hodnocení
 * Kompatabilita v prohlížečích - zkoušel jsem hru v [vivaldim](https://www.vivaldi.com), Firefoxu, Chromu, Opeře, zde by měla fungovat bez problémů. Hra funguje i v Edgy, kde ale nejdou zvuky, protože není podporováno Audio.
 * Grafika - SVG / Canvas - celá hra je v canvas
